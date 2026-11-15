@@ -67,6 +67,12 @@ section.panel.active{display:block; animation:fade .25s ease}
 .mx-cell .mcat{position:absolute; transform:translate(-50%,-50%); font-size:27px; line-height:1}
 .mx-cell.right{border-color:#2f9e44; background:#e6fcf5}
 .mx-cell.wrong{border-color:#e03131; background:#fff5f5; opacity:.7}
+.mv-prompt{font-size:19px; font-weight:800; text-align:center; margin:4px 0 12px; line-height:1.45}
+.mv-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:330px; margin:0 auto}
+.mv-cell{height:74px; background:#fffdf6; border:3px solid #f0e2c8; border-radius:14px; cursor:pointer; font-size:32px; padding:0}
+.mv-cell.start{background:#fff9db; border-color:#ffe066}
+.mv-cell.right{border-color:#2f9e44; background:#e6fcf5}
+.mv-cell.wrong{border-color:#e03131; background:#fff5f5; opacity:.7}
 .detail{position:sticky; top:86px}
 @media(max-width:860px){.detail{position:static}}
 
@@ -180,12 +186,6 @@ button.q-item:hover{transform:scale(1.06)}
 .mcfront{position:absolute; transform:translate(-50%,-50%); width:46px; height:23px; background:linear-gradient(#e8b075,#dfa05e); border:2px solid #b97e3f; border-radius:3px 3px 5px 5px}
 .mcbox.closed .lid{position:absolute; left:-2px; top:0; width:50px; height:8px; background:#c9853f; border:2px solid #a96f31; border-radius:4px; z-index:2}
 .mcbox.closed .body{position:absolute; left:0; top:6px; width:46px; height:30px; background:linear-gradient(#e8b075,#dfa05e); border:2px solid #b97e3f; border-radius:3px 3px 5px 5px}
-.quiz-scene{max-width:520px; margin:0 auto}
-.pos-choices{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px}
-.pos-choice{padding:12px 18px; border-radius:16px; background:#fff; border:3px solid var(--line); font-size:20px; font-weight:800}
-.pos-choice:hover{transform:scale(1.05)}
-.pos-choice.right{border-color:var(--good); background:#ebfbee; color:var(--good)}
-.pos-choice.wrong{border-color:var(--bad); background:#fff5f5; color:var(--bad)}
 
 /* ---------- Pattern ---------- */
 .pat-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:9px}
@@ -491,14 +491,15 @@ button.q-item:hover{transform:scale(1.06)}
       <div class="score-line" id="mxScore">Score: 0 / 0</div>
     </div>
     <div class="card">
-      <p class="hint" style="text-align:center; font-size:18px">🎮 Game 2: Where is the cat?</p>
-      <div class="quiz-scene" id="posQuizScene"></div>
-      <div class="pos-choices" id="posChoices"></div>
-      <div class="feedback" id="posFeedback"></div>
+      <p class="hint" style="text-align:center; font-size:18px">👂 Game 2: Listen and move!</p>
+      <div class="mv-prompt">The cat is on the ⭐ square.<br>Listen! Where does the cat go?</div>
+      <div class="mv-grid" id="mvGrid"></div>
+      <div class="feedback" id="mvFeedback"></div>
       <div class="toolbar">
-        <button class="big-btn pink" onclick="newPosQuiz()">🎲 New question</button>
+        <button class="big-btn pink" onclick="newMoveQuiz()">🎲 New question</button>
+        <button class="big-btn" onclick="speakMove()">🔊 Hear it</button>
       </div>
-      <div class="score-line" id="posScore">Score: 0 / 0</div>
+      <div class="score-line" id="mvScore">Score: 0 / 0</div>
     </div>
   </div>
 </section>
@@ -523,16 +524,29 @@ button.q-item:hover{transform:scale(1.06)}
     </div>
   </div>
 
-  <div class="card mt">
-    <p class="hint" style="text-align:center; font-size:18px">🎮 Game: What comes next?</p>
-    <div class="seq-row" id="patQuizSeq"></div>
-    <div class="pat-choices" id="patChoices"></div>
-    <div class="feedback" id="patFeedback"></div>
-    <div class="toolbar">
-      <button class="big-btn sun" onclick="newPatQuiz()">🎲 New question</button>
-      <button class="big-btn" onclick="speakPatQuiz()">🔊 Hear it</button>
+  <div class="games-row">
+    <div class="card">
+      <p class="hint" style="text-align:center; font-size:18px">🎮 Game 1: What comes next?</p>
+      <div class="seq-row" id="patQuizSeq"></div>
+      <div class="pat-choices" id="patChoices"></div>
+      <div class="feedback" id="patFeedback"></div>
+      <div class="toolbar">
+        <button class="big-btn sun" onclick="newPatQuiz()">🎲 New question</button>
+        <button class="big-btn" onclick="speakPatQuiz()">🔊 Hear it</button>
+      </div>
+      <div class="score-line" id="patScore">Score: 0 / 0</div>
     </div>
-    <div class="score-line" id="patScore">Score: 0 / 0</div>
+    <div class="card">
+      <p class="hint" style="text-align:center; font-size:18px">🔍 Game 2: What is missing?</p>
+      <div class="seq-row" id="pgSeq"></div>
+      <div class="pat-choices" id="pgChoices"></div>
+      <div class="feedback" id="pgFeedback"></div>
+      <div class="toolbar">
+        <button class="big-btn sun" onclick="newPatGap()">🎲 New question</button>
+        <button class="big-btn" onclick="speakPatGap()">🔊 Hear it</button>
+      </div>
+      <div class="score-line" id="pgScore">Score: 0 / 0</div>
+    </div>
   </div>
 </section>
 
@@ -542,12 +556,27 @@ button.q-item:hover{transform:scale(1.06)}
 
 <script>
 /* ================= Speech (English, device voice) ================= */
-function speak(text){
+/* Prefer a CLEAR male voice (the first en-GB voice on many devices is deep
+   and hard for young children to hear). Deep voices are only a last resort,
+   and the pitch is raised a little to make the voice brighter. */
+const CLEAR_MALE_VOICES = ['microsoft ryan','daniel','microsoft christopher','microsoft guy','tom','alex','microsoft eric','aaron','google us english'];
+const DEEP_VOICES = ['google uk english male','microsoft george','fred'];
+function pickVoice(vs){
+  const en = vs.filter(x=>/^en([-_]|$)/i.test(x.lang));
+  if(!en.length) return null;
+  for(const name of CLEAR_MALE_VOICES){
+    const hit = en.find(x=>x.name.toLowerCase().includes(name));
+    if(hit) return hit;
+  }
+  const notDeep = x=>!DEEP_VOICES.some(d=>x.name.toLowerCase().includes(d));
+  return en.filter(x=>/^en[-_]GB/i.test(x.lang)).find(notDeep) || en.find(notDeep) || en[0];
+}
+function speak(text, rate){
   try{
     const u = new SpeechSynthesisUtterance(String(text).replace(/[🐱📦🏆🥇🥈🥉]/g,''));
-    u.lang = 'en-GB'; u.rate = 0.88; u.pitch = 1.05;
+    u.lang = 'en-GB'; u.rate = rate || 0.88; u.pitch = 1.15;
     const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
-    const v = vs.find(x=>/^en[-_]GB/i.test(x.lang)) || vs.find(x=>/^en/i.test(x.lang));
+    const v = pickVoice(vs);
     if(v) u.voice = v;
     speechSynthesis.cancel();
     speechSynthesis.speak(u);
@@ -1277,40 +1306,69 @@ function selectPos(id, silent){
   if(!silent) speak(currentPosWord);
 }
 
-/* Position game */
-let quizPos = POSITIONS[0], quizDone=false, quizTried=false, posRight=0, posTotal=0;
-function newPosQuiz(silent){
-  quizPos = POSITIONS[Math.floor(Math.random()*POSITIONS.length)];
-  quizDone = false; quizTried = false;
-  document.getElementById('posQuizScene').innerHTML = sceneHTML(quizPos);
-  document.getElementById('posFeedback').textContent = '';
-  document.getElementById('posFeedback').className = 'feedback';
-  const others = shuffle(POSITIONS.filter(p=>p.id!==quizPos.id)).slice(0,2);
-  const opts = shuffle([quizPos, ...others]);
-  document.getElementById('posChoices').innerHTML = opts.map(p=>
-    '<button class="pos-choice" onclick="answerPos(this,\''+p.id+'\')">'+p.word+'</button>').join('');
-  document.getElementById('posScore').textContent = 'Score: ' + posRight + ' / ' + posTotal;
-  if(!silent) speak('Where is the cat?');
+/* Position Game 2: Listen and move — the cat starts on the star square;
+   the app SPEAKS a move (e.g. "up two squares") and the child taps the
+   square the cat lands on. The instruction is never written down. */
+const MV_DIRS = [
+  {id:'up',    dr:-1, dc:0, arrow:'⬆️'},
+  {id:'down',  dr:1,  dc:0, arrow:'⬇️'},
+  {id:'left',  dr:0,  dc:-1, arrow:'⬅️'},
+  {id:'right', dr:0,  dc:1, arrow:'➡️'}
+];
+let mvStart = {r:2, c:1}, mvDir = MV_DIRS[0], mvSteps = 2, mvTarget = {r:0, c:1};
+let mvDone = false, mvTried = false, mvRight = 0, mvTotal = 0;
+function movePhrase(){
+  return mvDir.id + ' ' + (mvSteps === 1 ? 'one square' : 'two squares');
 }
-function answerPos(btn, id){
-  if(quizDone) return;
-  const fb = document.getElementById('posFeedback');
-  if(id === quizPos.id){
-    quizDone = true; posTotal++;
-    if(!quizTried){ posRight++; addStar(); }
-    btn.classList.add('right');
-    fb.textContent = '🎉 Well done! ' + posSentence(quizPos);
+function renderMoveGrid(moved){
+  let html = '';
+  for(let r = 0; r < 3; r++) for(let c = 0; c < 3; c++){
+    const isStart = r === mvStart.r && c === mvStart.c;
+    const isTarget = r === mvTarget.r && c === mvTarget.c;
+    let content = '', cls = 'mv-cell';
+    if(isStart && !moved){ content = '🐱'; cls += ' start'; }
+    if(isStart && moved){ content = '⭐'; cls += ' start'; }
+    if(isTarget && moved){ content = '🐱'; cls += ' right'; }
+    html += '<button type="button" class="'+cls+'" data-r="'+r+'" data-c="'+c+'" onclick="answerMove(this,'+r+','+c+')">'+content+'</button>';
+  }
+  document.getElementById('mvGrid').innerHTML = html;
+}
+function newMoveQuiz(silent){
+  mvStart = {r: Math.floor(Math.random()*3), c: Math.floor(Math.random()*3)};
+  const options = [];
+  for(const d of MV_DIRS) for(const s of [1,2]){
+    const r = mvStart.r + d.dr*s, c = mvStart.c + d.dc*s;
+    if(r >= 0 && r < 3 && c >= 0 && c < 3) options.push({d, s, r, c});
+  }
+  const pick = options[Math.floor(Math.random()*options.length)];
+  mvDir = pick.d; mvSteps = pick.s; mvTarget = {r: pick.r, c: pick.c};
+  mvDone = false; mvTried = false;
+  renderMoveGrid(false);
+  document.getElementById('mvFeedback').textContent = '';
+  document.getElementById('mvFeedback').className = 'feedback';
+  document.getElementById('mvScore').textContent = 'Score: ' + mvRight + ' / ' + mvTotal;
+  if(!silent) speakMove();
+}
+function answerMove(el, r, c){
+  if(mvDone) return;
+  const fb = document.getElementById('mvFeedback');
+  if(r === mvTarget.r && c === mvTarget.c){
+    mvDone = true; mvTotal++;
+    if(!mvTried){ mvRight++; addStar(); }
+    renderMoveGrid(true);
+    fb.textContent = '🎉 Well done! The cat moved ' + movePhrase() + ' ' + mvDir.arrow;
     fb.className = 'feedback good';
-    speak(posSentence(quizPos));
+    speak('Well done! The cat moved ' + movePhrase());
   }else{
-    quizTried = true;
-    btn.classList.add('wrong');
-    fb.textContent = 'Try again! Look at the cat and the box.';
+    mvTried = true;
+    el.classList.add('wrong');
+    fb.textContent = 'Try again! Start from the cat and count the squares.';
     fb.className = 'feedback bad';
     speak('Try again');
   }
-  document.getElementById('posScore').textContent = 'Score: ' + posRight + ' / ' + posTotal;
+  document.getElementById('mvScore').textContent = 'Score: ' + mvRight + ' / ' + mvTotal;
 }
+function speakMove(){ speak('Move ' + movePhrase() + '!'); }
 
 /* Position Game 1: 3x3 matrix — read the position word, tap the matching picture.
    9 cells = the 8 position words, with 'next to' shown twice (left and right). */
@@ -1384,7 +1442,8 @@ const PAT_THEMES = [
   {id:'colours', label:'🎨 Colours', items:[{e:'🔴', n:'red'},    {e:'🔵', n:'blue'},   {e:'🟡', n:'yellow'}]},
   {id:'shapes',  label:'🔷 Shapes',  items:[{e:'🟦', n:'square'}, {e:'🔺', n:'triangle'},{e:'⭐', n:'star'}]},
   {id:'fruits',  label:'🍓 Fruits',  items:[{e:'🍎', n:'apple'},  {e:'🍌', n:'banana'}, {e:'🍇', n:'grapes'}]},
-  {id:'animals', label:'🐶 Animals', items:[{e:'🐶', n:'dog'},    {e:'🐱', n:'cat'},    {e:'🐰', n:'rabbit'}]}
+  {id:'animals', label:'🐶 Animals', items:[{e:'🐶', n:'dog'},    {e:'🐱', n:'cat'},    {e:'🐰', n:'rabbit'}]},
+  {id:'marvel',  label:'🦸 Marvel heroes', items:[{e:'🕷️', n:'Spider-Man'}, {e:'🛡️', n:'Captain America'}, {e:'🔨', n:'Thor'}]}
 ];
 const PAT_LETTERS = ['A','B','C'];
 let patType = PAT_TYPES[0], patTheme = PAT_THEMES[0];
@@ -1423,10 +1482,11 @@ function selectPatType(id){
   renderPattern();
   speakPattern();
 }
+const PAT_RATE = 0.44;   /* Tab 6 reads at half the normal speed (0.88 / 2) */
 function speakPattern(){
   const names = [];
   for(let r=0;r<2;r++) patType.unit.forEach(u=>names.push(patTheme.items[u].n));
-  speak('Pattern ' + patType.id.split('').join(' ') + '. ' + names.join(', ') + '. It repeats!');
+  speak('Pattern ' + patType.id.split('').join(' ') + '. ' + names.join(', ') + '. It repeats!', PAT_RATE);
 }
 
 /* Pattern game: What comes next? */
@@ -1453,7 +1513,7 @@ function newPatQuiz(silent){
 }
 function speakPatQuiz(){
   const names = quizSeq.map(u=>quizTheme.items[u].n);
-  speak(names.join(', ') + '. What comes next?');
+  speak(names.join(', ') + '. What comes next?', PAT_RATE);
 }
 function answerPat(btn, name){
   if(patDone) return;
@@ -1467,15 +1527,68 @@ function answerPat(btn, name){
     if(q){ q.classList.remove('q'); q.querySelector('.e').textContent = quizAnswer.e; }
     fb.textContent = '🎉 Well done! ' + quizAnswer.e + ' ' + quizAnswer.n + ' comes next.';
     fb.className = 'feedback good';
-    speak('Well done! ' + quizAnswer.n + ' comes next.');
+    speak('Well done! ' + quizAnswer.n + ' comes next.', PAT_RATE);
   }else{
     quizTriedPat = true;
     btn.classList.add('wrong');
     fb.textContent = 'Try again! Say the pattern out loud and listen for the part that repeats.';
     fb.className = 'feedback bad';
-    speak('Try again');
+    speak('Try again', PAT_RATE);
   }
   document.getElementById('patScore').textContent = 'Score: ' + patRight + ' / ' + patTotal;
+}
+
+/* Pattern Game 2: What is missing? — one item in the MIDDLE of the pattern is hidden */
+let pgTheme = PAT_THEMES[0], pgType = PAT_TYPES[0], pgSeq = [], pgBlank = 2, pgAnswer = null, pgDone = false, pgTried = false, pgRight = 0, pgTotal = 0;
+function renderPatGap(){
+  document.getElementById('pgSeq').innerHTML = pgSeq.map((u,i)=>
+    i === pgBlank
+      ? '<div class="seq-item q"><span class="e">?</span><span class="l">&nbsp;</span></div>'
+      : '<div class="seq-item"><span class="e">'+pgTheme.items[u].e+'</span><span class="l">'+PAT_LETTERS[u]+'</span></div>'
+  ).join('');
+}
+function newPatGap(silent){
+  pgTheme = PAT_THEMES[Math.floor(Math.random()*PAT_THEMES.length)];
+  pgType = PAT_TYPES[Math.floor(Math.random()*PAT_TYPES.length)];
+  const unit = pgType.unit;
+  const total = unit.length*2 + 2;                     /* 2 full units + 2 more */
+  pgSeq = [];
+  for(let i=0;i<total;i++) pgSeq.push(unit[i % unit.length]);
+  pgBlank = 1 + Math.floor(Math.random()*(total-2));   /* never the first or the last item */
+  pgAnswer = pgTheme.items[pgSeq[pgBlank]];
+  pgDone = false; pgTried = false;
+  renderPatGap();
+  document.getElementById('pgFeedback').textContent = '';
+  document.getElementById('pgFeedback').className = 'feedback';
+  document.getElementById('pgChoices').innerHTML = shuffle(pgTheme.items.slice()).map(it=>
+    '<button class="pat-choice" onclick="answerPatGap(this,\''+it.n+'\')">'+it.e+'</button>').join('');
+  document.getElementById('pgScore').textContent = 'Score: ' + pgRight + ' / ' + pgTotal;
+  if(!silent) speakPatGap();
+}
+function speakPatGap(){
+  const names = pgSeq.map((u,i)=> i === pgBlank ? 'what' : pgTheme.items[u].n);
+  speak(names.join(', ') + '. What is missing?', PAT_RATE);
+}
+function answerPatGap(btn, name){
+  if(pgDone) return;
+  const fb = document.getElementById('pgFeedback');
+  if(name === pgAnswer.n){
+    pgDone = true; pgTotal++;
+    if(!pgTried){ pgRight++; addStar(); }
+    btn.classList.add('right');
+    const q = document.querySelector('#pgSeq .seq-item.q');
+    if(q){ q.classList.remove('q'); q.querySelector('.e').textContent = pgAnswer.e; q.querySelector('.l').textContent = PAT_LETTERS[pgSeq[pgBlank]]; }
+    fb.textContent = '🎉 Well done! ' + pgAnswer.e + ' ' + pgAnswer.n + ' is missing.';
+    fb.className = 'feedback good';
+    speak('Well done! ' + pgAnswer.n + ' is missing.', PAT_RATE);
+  }else{
+    pgTried = true;
+    btn.classList.add('wrong');
+    fb.textContent = 'Try again! Say the pattern out loud and find the part that repeats.';
+    fb.className = 'feedback bad';
+    speak('Try again', PAT_RATE);
+  }
+  document.getElementById('pgScore').textContent = 'Score: ' + pgRight + ' / ' + pgTotal;
 }
 
 /* ================= Init ================= */
@@ -1500,10 +1613,11 @@ newTake20();
 newSubTF();
 renderPosGrid();
 selectPos('on', true);
-newPosQuiz(true);
+newMoveQuiz(true);
 newMatrixQuiz(true);
 renderPattern();
 newPatQuiz(true);
+newPatGap(true);
 </script>
 </body>
 </html>
