@@ -571,17 +571,21 @@ function pickVoice(vs){
   const notDeep = x=>!DEEP_VOICES.some(d=>x.name.toLowerCase().includes(d));
   return en.filter(x=>/^en[-_]GB/i.test(x.lang)).find(notDeep) || en.find(notDeep) || en[0];
 }
+function makeUtterance(text, rate){
+  const u = new SpeechSynthesisUtterance(String(text).replace(/[🐱📦🏆🥇🥈🥉]/g,''));
+  u.lang = 'en-GB'; u.rate = rate || 0.88; u.pitch = 1.15;
+  const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  const v = pickVoice(vs);
+  if(v) u.voice = v;
+  return u;
+}
 function speak(text, rate){
   try{
-    const u = new SpeechSynthesisUtterance(String(text).replace(/[🐱📦🏆🥇🥈🥉]/g,''));
-    u.lang = 'en-GB'; u.rate = rate || 0.88; u.pitch = 1.15;
-    const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
-    const v = pickVoice(vs);
-    if(v) u.voice = v;
     speechSynthesis.cancel();
-    speechSynthesis.speak(u);
+    speechSynthesis.speak(makeUtterance(text, rate));
   }catch(e){ /* no voice on this device – the pictures still teach */ }
 }
+
 if(window.speechSynthesis){ try{ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = ()=>speechSynthesis.getVoices(); }catch(e){} }
 
 /* ================= Stars ================= */
@@ -1482,11 +1486,10 @@ function selectPatType(id){
   renderPattern();
   speakPattern();
 }
-const PAT_RATE = 0.44;   /* Tab 6 reads at half the normal speed (0.88 / 2) */
 function speakPattern(){
   const names = [];
   for(let r=0;r<2;r++) patType.unit.forEach(u=>names.push(patTheme.items[u].n));
-  speak('Pattern ' + patType.id.split('').join(' ') + '. ' + names.join(', ') + '. It repeats!', PAT_RATE);
+  speak('Pattern ' + patType.id.split('').join(' ') + '. ' + names.join(', ') + '. It repeats!');
 }
 
 /* Pattern game: What comes next? */
@@ -1513,7 +1516,7 @@ function newPatQuiz(silent){
 }
 function speakPatQuiz(){
   const names = quizSeq.map(u=>quizTheme.items[u].n);
-  speak(names.join(', ') + '. What comes next?', PAT_RATE);
+  speak(names.join(', ') + '. What comes next?');
 }
 function answerPat(btn, name){
   if(patDone) return;
@@ -1527,13 +1530,13 @@ function answerPat(btn, name){
     if(q){ q.classList.remove('q'); q.querySelector('.e').textContent = quizAnswer.e; }
     fb.textContent = '🎉 Well done! ' + quizAnswer.e + ' ' + quizAnswer.n + ' comes next.';
     fb.className = 'feedback good';
-    speak('Well done! ' + quizAnswer.n + ' comes next.', PAT_RATE);
+    speak('Well done! ' + quizAnswer.n + ' comes next.');
   }else{
     quizTriedPat = true;
     btn.classList.add('wrong');
     fb.textContent = 'Try again! Say the pattern out loud and listen for the part that repeats.';
     fb.className = 'feedback bad';
-    speak('Try again', PAT_RATE);
+    speak('Try again');
   }
   document.getElementById('patScore').textContent = 'Score: ' + patRight + ' / ' + patTotal;
 }
@@ -1567,7 +1570,7 @@ function newPatGap(silent){
 }
 function speakPatGap(){
   const names = pgSeq.map((u,i)=> i === pgBlank ? 'what' : pgTheme.items[u].n);
-  speak(names.join(', ') + '. What is missing?', PAT_RATE);
+  speak(names.join(', ') + '. What is missing?');
 }
 function answerPatGap(btn, name){
   if(pgDone) return;
@@ -1580,13 +1583,13 @@ function answerPatGap(btn, name){
     if(q){ q.classList.remove('q'); q.querySelector('.e').textContent = pgAnswer.e; q.querySelector('.l').textContent = PAT_LETTERS[pgSeq[pgBlank]]; }
     fb.textContent = '🎉 Well done! ' + pgAnswer.e + ' ' + pgAnswer.n + ' is missing.';
     fb.className = 'feedback good';
-    speak('Well done! ' + pgAnswer.n + ' is missing.', PAT_RATE);
+    speak('Well done! ' + pgAnswer.n + ' is missing.');
   }else{
     pgTried = true;
     btn.classList.add('wrong');
     fb.textContent = 'Try again! Say the pattern out loud and find the part that repeats.';
     fb.className = 'feedback bad';
-    speak('Try again', PAT_RATE);
+    speak('Try again');
   }
   document.getElementById('pgScore').textContent = 'Score: ' + pgRight + ' / ' + pgTotal;
 }
