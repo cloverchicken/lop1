@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fun Science – Grade 1 · Cambridge</title>
+<style>
+:root{
+  --ink:#25324a; --bg:#fff7e8; --card:#ffffff;
+  --coral:#ff6b5e; --teal:#12b5a5; --sun:#ffb703; --sky:#4dabf7; --grape:#9775fa; --pink:#f783ac;
+  --soft:#fff1d6; --line:#f0e2c8; --good:#2f9e44; --bad:#e03131;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0; font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--ink)}
+button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
+button:focus-visible{outline:3px solid var(--sky); outline-offset:2px}
+
+/* ---------- Header (same style as the Maths app) ---------- */
+header{position:sticky; top:0; z-index:50; background:linear-gradient(90deg,#ff8fa3,#ffb703 55%,#12b5a5); box-shadow:0 3px 14px rgba(37,50,74,.18)}
+.head-in{max-width:1080px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.logo{font-size:34px; line-height:1}
+.head-in h1{margin:0; font-size:clamp(20px,3.4vw,28px); color:#fff; text-shadow:0 2px 0 rgba(0,0,0,.12); letter-spacing:.3px}
+.head-in .sub{color:#fff; font-weight:700; font-size:13px; opacity:.95}
+.stars{margin-left:auto; background:#fff; border-radius:999px; padding:7px 14px; font-weight:800; font-size:16px; box-shadow:0 2px 0 rgba(0,0,0,.12)}
+
+/* ---------- Tabs ---------- */
+nav.tabs{max-width:1080px; margin:14px auto 0; padding:0 16px; display:flex; gap:10px; flex-wrap:wrap}
+.tab-btn{flex:1 1 200px; padding:13px 10px; border-radius:18px; background:#fff; border:3px solid var(--line); font-size:clamp(15px,2.2vw,19px); font-weight:800; color:var(--ink); transition:transform .12s, border-color .12s, background .12s}
+.tab-btn .ticon{font-size:22px; margin-right:6px}
+.tab-btn:hover{transform:translateY(-2px)}
+.tab-btn.active[data-tab="tabramp"]{border-color:var(--coral); background:#fff0ec; color:#d9480f; box-shadow:0 4px 0 #ffd8d2}
+.tab-btn.active[data-tab="tabplant"]{border-color:var(--teal); background:#e6fcf9; color:#087f74; box-shadow:0 4px 0 #c3fae8}
+.tab-btn.active[data-tab="tabwater"]{border-color:var(--sky); background:#e7f5ff; color:#1971c2; box-shadow:0 4px 0 #d0ebff}
+.tab-btn.active[data-tab="tabfloat"]{border-color:#4dabf7; background:#e7f5ff; color:#1971c2; box-shadow:0 4px 0 #d0ebff}
+.tab-btn.active[data-tab="tabmagnet"]{border-color:var(--grape); background:#f3f0ff; color:#5f3dc4; box-shadow:0 4px 0 #e5dbff}
+.tab-btn.active[data-tab="tabmelt"]{border-color:var(--sky); background:#e7f5ff; color:#1971c2; box-shadow:0 4px 0 #d0ebff}
+.tab-btn.active[data-tab="tabseed"]{border-color:var(--teal); background:#e6fcf9; color:#087f74; box-shadow:0 4px 0 #c3fae8}
+.tab-btn.active[data-tab="tabwind"]{border-color:#66d9e8; background:#e3fafc; color:#0b7285; box-shadow:0 4px 0 #c5f6fa}
+.tab-btn.active[data-tab="tabshake"]{border-color:var(--sun); background:#fff9db; color:#e8890c; box-shadow:0 4px 0 #ffec99}
+.tab-btn.active[data-tab="tabshadow"]{border-color:var(--coral); background:#fff0ec; color:#d9480f; box-shadow:0 4px 0 #ffd8d2}
+
+main{max-width:1080px; margin:0 auto; padding:16px}
+section.panel{display:none}
+section.panel.active{display:block; animation:fade .25s ease}
+@keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+.card{background:var(--card); border:3px solid var(--line); border-radius:24px; padding:18px; box-shadow:0 4px 0 rgba(240,226,200,.8); margin-bottom:16px}
+.card h2{margin:0 0 6px; font-size:clamp(19px,2.6vw,24px)}
+.hint{font-size:15px; font-weight:700; color:#5b6b84; margin:0 0 12px}
+.big-btn{display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:999px; font-weight:800; font-size:17px; color:#fff; background:var(--coral); box-shadow:0 4px 0 #d9480f; transition:transform .1s}
+.big-btn:active{transform:translateY(3px); box-shadow:0 1px 0 #d9480f}
+.big-btn.teal{background:var(--teal); box-shadow:0 4px 0 #087f74}
+.big-btn.teal:active{box-shadow:0 1px 0 #087f74}
+.big-btn.grape{background:var(--grape); box-shadow:0 4px 0 #5f3dc4}
+.big-btn.grape:active{box-shadow:0 1px 0 #5f3dc4}
+.big-btn.sky{background:var(--sky); box-shadow:0 4px 0 #1971c2}
+.big-btn.sky:active{box-shadow:0 1px 0 #1971c2}
+.big-btn.sun{background:var(--sun); color:#7a4d00; box-shadow:0 4px 0 #e09c00}
+.big-btn.sun:active{box-shadow:0 1px 0 #e09c00}
+.big-btn.pink{background:var(--pink); box-shadow:0 4px 0 #c2255c}
+.big-btn.pink:active{box-shadow:0 1px 0 #c2255c}
+.big-btn:disabled{opacity:.45; cursor:default; transform:none}
+
+.split{display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+.games-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start}
+@media(max-width:860px){.games-row{grid-template-columns:1fr}}
+.detail{position:sticky; top:86px}
+@media(max-width:860px){.detail{position:static}}
+
+/* ---------- Scientist skill badge (Scientific Enquiry, woven in) ---------- */
+.skill{display:inline-block; background:#fff9db; border:2px solid #ffe066; color:#7a5b00; border-radius:999px; padding:4px 12px; font-size:13px; font-weight:800; margin-bottom:10px}
+
+/* ---------- Tap-and-learn grids ---------- */
+.tap-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(86px,1fr)); gap:9px}
+.tap-btn{border-radius:16px; background:#fff; border:3px solid var(--line); padding:10px 4px 8px; display:flex; flex-direction:column; align-items:center; gap:2px; transition:transform .1s, border-color .1s}
+.tap-btn:hover{transform:scale(1.05)}
+.tap-btn.sel{border-color:var(--teal); background:#e6fcf9}
+.tap-btn .e{font-size:36px; line-height:1.1}
+.tap-btn .w{font-weight:800; font-size:13px; text-align:center}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px}
+.chip{padding:10px 14px; border-radius:999px; background:#fff; border:3px solid var(--line); font-weight:800; font-size:15px; transition:transform .1s, border-color .1s}
+.chip:hover{transform:translateY(-2px)}
+.chip.sel{border-color:var(--grape); background:#f3f0ff}
+.chip.on{border-color:var(--sun); background:#fff9db}
+
+/* ---------- Detail panel ---------- */
+.detail-big{font-size:74px; text-align:center; line-height:1.15}
+.detail-name{font-size:24px; font-weight:800; text-align:center; margin:4px 0}
+.detail-text{font-size:16.5px; font-weight:600; color:#40506a; text-align:center; line-height:1.5; margin:6px 0 10px}
+.verdict{display:inline-block; border-radius:999px; padding:5px 14px; font-weight:800; font-size:15px; color:#fff; background:var(--teal)}
+.verdict.no{background:#adb5bd}
+.verdict.grape{background:var(--grape)}
+.verdict.sky{background:var(--sky)}
+.center{text-align:center}
+.prop-chips{display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin:6px 0}
+.prop-chips span{background:var(--soft); border:2px solid var(--line); border-radius:999px; padding:3px 11px; font-size:13.5px; font-weight:800}
+
+/* ---------- Quiz games ---------- */
+.q-prompt{font-size:20px; font-weight:800; text-align:center; margin:4px 0 6px; line-height:1.45}
+.q-emoji{font-size:64px; text-align:center; line-height:1.2}
+.q-opts{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:10px}
+.q-opt{padding:13px 20px; border-radius:16px; background:#fff; border:3px solid var(--line); font-size:18px; font-weight:800; transition:transform .1s}
+.q-opt:hover{transform:translateY(-2px)}
+.q-opt.right{border-color:var(--good); background:#e6fcf5}
+.q-opt.wrong{border-color:var(--bad); background:#fff5f5; opacity:.65}
+.q-fb{text-align:center; font-size:17px; font-weight:800; min-height:26px; margin-top:10px}
+.q-fb.good{color:var(--good)} .q-fb.bad{color:var(--bad)}
+.q-score{text-align:center; font-weight:800; color:#5b6b84; margin-top:4px}
+.q-top{display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap}
+.q-top h2{margin:0}
+
+/* ---------- Plant grow sim ---------- */
+.grow-stage{font-size:88px; text-align:center; line-height:1.25; transition:transform .3s}
+.grow-wrap{position:relative; max-width:280px; margin:0 auto}
+.grow-x{position:absolute; inset:0; display:none; align-items:center; justify-content:center; font-size:110px; line-height:1; text-shadow:0 3px 10px rgba(224,49,49,.35)}
+.grow-x.show{display:flex}
+/* Animal cards: all six on ONE horizontal row */
+.tap-grid.row6{grid-template-columns:repeat(6,1fr)}
+@media(max-width:700px){.tap-grid.row6 .tap-btn .e{font-size:25px} .tap-grid.row6 .tap-btn .w{font-size:10.5px} .tap-grid.row6{gap:6px}}
+.soil{height:16px; border-radius:8px; background:linear-gradient(90deg,#b08968,#8a5a33); margin:2px auto 10px; max-width:260px}
+
+/* ---------- Change It! animation stage ---------- */
+.change-stage{font-size:88px; text-align:center; line-height:1.3; min-height:112px}
+.anim-melt{animation:meltK .95s ease forwards}
+@keyframes meltK{0%{transform:scale(1,1)}55%{transform:scale(1.18,.5)}100%{transform:scale(1.3,.32)}}
+.anim-squash{animation:squashK .9s ease}
+@keyframes squashK{0%{transform:scale(1,1)}40%{transform:scale(1.28,.42)}70%{transform:scale(.94,1.06)}100%{transform:scale(1,1)}}
+.anim-flatten{animation:flattenK .8s ease forwards}
+@keyframes flattenK{from{transform:scale(1,1)}to{transform:scale(1.5,.48)}}
+.anim-stretch{animation:stretchK .8s ease forwards}
+@keyframes stretchK{from{transform:scale(1,1)}to{transform:scale(1.75,.78)}}
+.anim-bend{animation:bendK .8s ease forwards}
+@keyframes bendK{from{transform:rotate(0) skewX(0)}to{transform:rotate(15deg) skewX(-14deg)}}
+.anim-crumple{animation:crumpleK .8s ease forwards}
+@keyframes crumpleK{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-9deg) scale(.84)}55%{transform:rotate(8deg) scale(.7)}100%{transform:rotate(3deg) scale(.62)}}
+.anim-shake{animation:shakeK .6s ease}
+@keyframes shakeK{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
+.anim-pulse{animation:pulseK .8s ease}
+@keyframes pulseK{0%{transform:scale(1)}45%{transform:scale(1.13)}100%{transform:scale(1)}}
+
+/* ---------- Push / pull stage (like the float-sink tank) ---------- */
+.pp-stage{position:relative; height:190px; border:4px solid #a5d8ff; border-radius:22px; background:linear-gradient(#e7f5ff 0 64%, #d3f9d8 64% 100%); overflow:hidden; margin-top:10px}
+.pp-actor{position:absolute; left:24px; bottom:24px; font-size:56px; line-height:1; z-index:2}
+.pp-obj{position:absolute; bottom:28px; font-size:52px; line-height:1; left:118px}
+.pp-obj.pressing{animation:pressK .7s ease}
+@keyframes pressK{0%{transform:scale(1,1)}40%{transform:scale(1.15,.72)}100%{transform:scale(1,1)}}
+.pp-arrow{position:absolute; top:8px; left:50%; transform:translateX(-50%); font-size:34px; animation:arrowBounce .7s ease-in-out infinite alternate}
+@keyframes arrowBounce{from{margin-left:-7px}to{margin-left:7px}}
+.pp-verdict{position:absolute; top:10px; right:12px; border-radius:999px; padding:5px 14px; font-weight:800; font-size:15px; color:#fff; background:#adb5bd}
+.pp-verdict.push{background:var(--sky)}
+.pp-verdict.pull{background:var(--grape)}
+
+/* ---------- Float / sink tank ---------- */
+.tank{position:relative; height:190px; border:4px solid #a5d8ff; border-top:none; border-radius:0 0 22px 22px; background:linear-gradient(#e7f5ff 0 32%, #74c0fc 32% 100%); overflow:hidden; margin-top:10px}
+.tank .floater{position:absolute; left:50%; transform:translateX(-50%); font-size:52px; transition:top 1s ease}
+.tank .waterline{position:absolute; top:29%; left:0; right:0; text-align:center; font-size:12px; font-weight:800; color:#1971c2; opacity:.75}
+
+/* ---------- Investigation cards ---------- */
+.inv{border-color:#ffe066; background:#fffdf3}
+.inv-steps{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:8px}
+@media(max-width:700px){.inv-steps{grid-template-columns:1fr}}
+.inv-step{background:#fff; border:3px solid var(--line); border-radius:16px; padding:12px}
+.inv-step h3{margin:0 0 6px; font-size:16px}
+.inv-step p{margin:0 0 8px; font-size:14.5px; font-weight:600; color:#40506a; line-height:1.45}
+.inv-result{background:#e6fcf5; border:3px solid #8ce99a; border-radius:14px; padding:10px 12px; font-weight:700; font-size:15px; line-height:1.5; display:none}
+.inv-result.show{display:block}
+
+/* ---------- Ask-step animation: one week, window vs dark cupboard ---------- */
+.ask-anim{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:8px 0}
+.scene{border-radius:14px; padding:8px 6px 6px; text-align:center; position:relative; overflow:hidden; min-height:118px}
+.scene-sun{background:linear-gradient(#aee7ff,#e7f9ff); border:3px solid #74c0fc}
+.scene-dark{background:linear-gradient(#2b3350,#171c30); border:3px solid #495078}
+.scene .sky-emoji{font-size:30px; display:inline-block; animation:sunPulse 1.6s ease-in-out infinite}
+@keyframes sunPulse{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.18) rotate(12deg)}}
+.scene .plant-emoji{font-size:44px; line-height:1.15; animation:plantBob 2.2s ease-in-out infinite}
+@keyframes plantBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.scene-dark .plant-emoji{filter:grayscale(.55) brightness(.75); animation:plantSway 2.6s ease-in-out infinite}
+@keyframes plantSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.scene-label{font-size:12.5px; font-weight:800; margin-top:2px}
+.scene-sun .scene-label{color:#1971c2}
+.scene-dark .scene-label{color:#cdd6ff}
+.ask-day{text-align:center; font-weight:800; font-size:15px; color:#7a5b00; background:#fff9db; border:2px solid #ffe066; border-radius:999px; padding:5px 10px; margin:6px 0 8px}
+
+/* ---------- Ramp Race tab ---------- */
+.ramp-scene{position:relative; height:132px; border-radius:14px; background:linear-gradient(#e7f5ff 0 80%, #d3f9d8 80% 100%); border:3px solid var(--line); overflow:hidden}
+.ramp-shape{position:absolute; left:6%; bottom:14px; width:56%; background:#ffb703; clip-path:polygon(0 0,0 100%,100% 100%)}
+.ramp-shape.steep{height:88px}
+.ramp-shape.gentle{height:38px; background:#ffd43b}
+.ramp-car{position:absolute; font-size:34px; line-height:1; z-index:2}
+.flag-wave{display:inline-block; animation:flagWave 1s ease-in-out infinite; transform-origin:bottom left}
+@keyframes flagWave{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(9deg)}}
+.car-bob{animation:plantBob 1.8s ease-in-out infinite}
+/* Cars face DOWNHILL to the right (emoji cars face left by default) */
+.face-right{transform:scaleX(-1)}
+.car-bob-r{animation:carBobR 1.8s ease-in-out infinite}
+@keyframes carBobR{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-3px)}}
+/* One continuous race motion per car — no stop at the foot of the ramp */
+.racing-a{animation:raceA 3.6s linear both}
+@keyframes raceA{0%{left:4%; bottom:74px}30%{left:25%; bottom:14px}100%{left:88%; bottom:14px}}
+.racing-b{animation:raceB 4.4s linear both}
+@keyframes raceB{0%{left:4%; bottom:40px}38%{left:25%; bottom:14px}100%{left:57%; bottom:14px}}
+.scene-tag{position:absolute; top:6px; left:8px; font-size:12.5px; font-weight:800; color:#1971c2; z-index:3}
+.predict-cards{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media(max-width:700px){.predict-cards{grid-template-columns:1fr}}
+.predict-card{border:3px solid var(--line); border-radius:18px; padding:12px; background:#fff; font-weight:800; font-size:16px; text-align:center; transition:transform .12s, border-color .12s}
+.predict-card:hover{transform:translateY(-2px)}
+.predict-card.sel{border-color:var(--teal); background:#e6fcf9; box-shadow:0 4px 0 #c3fae8}
+.predict-card .tick{display:none; font-size:19px}
+.predict-card.sel .tick{display:inline}
+.race-stage{position:relative; border:4px solid #a5d8ff; border-radius:22px; background:linear-gradient(#f7fbff,#e7f5ff); overflow:hidden}
+.lane{position:relative; height:106px; border-bottom:3px dashed #ced4da}
+.lane .ramp-shape{left:3%; bottom:12px; width:24%}
+.lane .ramp-shape.steep{height:64px}
+.lane .ramp-shape.gentle{height:28px}
+.lane-label{position:absolute; top:4px; left:8px; font-size:12.5px; font-weight:800; color:#5b6b84; z-index:3}
+.race-car{position:absolute; font-size:34px; line-height:1; z-index:2}
+.ruler{position:relative; height:22px; font-size:11.5px; font-weight:800; color:#868e96}
+.ruler span{position:absolute; transform:translateX(-50%)}
+.race-banner{display:none; text-align:center; font-size:19px; font-weight:800; color:#087f74; background:#e6fcf5; border:3px solid #8ce99a; border-radius:14px; padding:10px; margin-top:12px}
+.race-banner.show{display:block}
+.dist-row{display:flex; align-items:center; gap:8px; margin:7px 0}
+.dist-track{flex:1; background:#f1f3f5; border-radius:999px; overflow:hidden}
+.dist-bar{height:22px; border-radius:999px; width:0; transition:width 1.2s ease}
+.vocab-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(158px,1fr)); gap:10px; margin-top:12px}
+.vocab-card{border:3px solid var(--line); border-radius:16px; padding:11px 12px; background:#fffdf6; text-align:left; transition:transform .1s, border-color .1s; width:100%}
+.vocab-card:hover{transform:translateY(-2px); border-color:var(--sun)}
+.vocab-card .ve{font-size:25px}
+.vocab-card .vw{font-size:16.5px; font-weight:800; margin-left:4px}
+
+/* ---------- Investigation tabs (shared) ---------- */
+.obj-row{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px}
+.test-obj{font-size:46px; text-align:center; transition:transform 1s ease, filter .6s ease; position:relative; min-width:86px}
+.test-obj .tag{display:block; font-size:12.5px; font-weight:800; color:#40506a; margin-top:2px}
+.test-obj.fly-up{transform:translateY(-52px)}
+.test-obj.wet{filter:brightness(.72) saturate(.55)}
+.badge{display:inline-block; border-radius:999px; padding:3px 11px; font-size:12.5px; font-weight:800; color:#fff; margin-top:4px}
+.badge.dry{background:var(--good)} .badge.wetb{background:var(--sky)} .badge.pick{background:var(--grape)} .badge.stay{background:#adb5bd}
+.mag-stage{position:relative; border:4px solid #e5dbff; border-radius:22px; background:#f8f5ff; padding:16px 12px; overflow:hidden; text-align:center}
+.drop{position:absolute; top:2px; font-size:19px; animation:dropFall .9s ease-in infinite}
+@keyframes dropFall{0%{transform:translateY(-4px); opacity:0}25%{opacity:1}100%{transform:translateY(30px); opacity:0}}
+.test-obj.blown{transform:translateX(72px) rotate(14deg)}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-11deg)}75%{transform:rotate(11deg)}}
+.shaking{animation:wiggle .28s ease-in-out 6}
+.melt-obj{display:inline-block; transition:transform 2.2s ease, opacity 2.2s ease}
+.shadow-stage{position:relative; height:170px; border:4px solid #ffe9a8; border-radius:22px; background:linear-gradient(#bde6ff 62%, #ffe9a8 62%); overflow:hidden}
+.shadow-sun{position:absolute; font-size:42px; transition:left 1.1s ease, top 1.1s ease; z-index:2}
+.shadow-tree{position:absolute; left:50%; bottom:26px; transform:translateX(-50%); font-size:56px; z-index:2}
+.shadow-shape{position:absolute; bottom:20px; left:50%; height:13px; background:rgba(43,54,93,.45); border-radius:999px; transition:width 1.1s ease, transform 1.1s ease, opacity 1.1s ease; z-index:1}
+.pale{filter:grayscale(.75) brightness(1.2)}
+.droop{display:inline-block; transform:rotate(16deg)}
+.reveal{display:none}
+.reveal.show{display:block}
+.big-result{font-size:64px; text-align:center; line-height:1.2}
+
+.toast{position:fixed; left:50%; bottom:26px; transform:translate(-50%,20px); background:#25324a; color:#fff; font-weight:800; font-size:17px; padding:12px 22px; border-radius:999px; opacity:0; pointer-events:none; transition:all .25s; z-index:99; box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.toast.show{opacity:1; transform:translate(-50%,0)}
+.foot{text-align:center; color:#8a97ad; font-weight:700; font-size:13px; padding:8px 0 22px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-in">
+    <div class="logo">🔬</div>
+    <div>
+      <h1>Fun Science – Grade 1</h1>
+      <div class="sub">Cambridge Science · Explore, play and discover!</div>
+    </div>
+    <div class="stars">⭐ <span id="starCount">0</span></div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="tabramp" onclick="showTab('tabramp',this)"><span class="ticon">🏁</span>The Ramp Race</button>
+  <button class="tab-btn" data-tab="tabplant" onclick="showTab('tabplant',this)"><span class="ticon">🌱</span>Plant &amp; Light</button>
+  <button class="tab-btn" data-tab="tabwater" onclick="showTab('tabwater',this)"><span class="ticon">💧</span>Waterproof Test</button>
+  <button class="tab-btn" data-tab="tabfloat" onclick="showTab('tabfloat',this)"><span class="ticon">🛁</span>Float or Sink?</button>
+  <button class="tab-btn" data-tab="tabmagnet" onclick="showTab('tabmagnet',this)"><span class="ticon">🧲</span>Magnet Magic</button>
+  <button class="tab-btn" data-tab="tabmelt" onclick="showTab('tabmelt',this)"><span class="ticon">🧊</span>Melting Ice</button>
+  <button class="tab-btn" data-tab="tabseed" onclick="showTab('tabseed',this)"><span class="ticon">🫘</span>Seeds &amp; Water</button>
+  <button class="tab-btn" data-tab="tabwind" onclick="showTab('tabwind',this)"><span class="ticon">🌬️</span>The Wind Test</button>
+  <button class="tab-btn" data-tab="tabshake" onclick="showTab('tabshake',this)"><span class="ticon">🔔</span>Shake It!</button>
+  <button class="tab-btn" data-tab="tabshadow" onclick="showTab('tabshadow',this)"><span class="ticon">🌞</span>Sun &amp; Shadows</button>
+</nav>
+
+<main>
+<!-- ================= TAB 4 · BE A SCIENTIST: THE RAMP RACE ================= -->
+<section class="panel active" id="tabramp">
+
+  <div class="card">
+    <h2>🏁 The Ramp Race</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words for this investigation — tap a card to hear it!</p>
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <p class="hint">Look at the two ramps. One is <b>steep</b> (high) and one is <b>gentle</b> (low). Two toy cars start at the same time.</p>
+    <div class="split">
+      <div class="ramp-scene">
+        <div class="scene-tag" style="left:auto; right:8px">Ramp A · STEEP — high ⬆️⬆️</div>
+        <div class="ramp-shape steep"></div>
+        <div class="ramp-car car-bob-r" style="left:8%; bottom:96px">🚗</div>
+        <div style="position:absolute; right:7%; bottom:16px; font-size:28px"><span class="flag-wave">🏁</span></div>
+      </div>
+      <div class="ramp-scene">
+        <div class="scene-tag">Ramp B · GENTLE — low ⬆️</div>
+        <div class="ramp-shape gentle"></div>
+        <div class="ramp-car car-bob-r" style="left:8%; bottom:46px">🚙</div>
+        <div style="position:absolute; right:7%; bottom:16px; font-size:28px"><span class="flag-wave">🏁</span></div>
+      </div>
+    </div>
+    <div class="ask-day" style="margin-top:12px">🚗 🟰 🚙 The two cars are the SAME — same size, same wheels. Only the ramps are different!</div>
+    <p class="q-prompt" style="margin-top:14px">Two toy cars roll down two ramps — one steep, one gentle.<br>Which car will go <b>faster</b> and <b>further</b>?</p>
+    <div class="center"><button class="big-btn sky" onclick="speakRampQ()">🔊 Listen</button></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">Scientists guess BEFORE they test. What do YOU think will happen? Tap your prediction.</p>
+    <div class="predict-cards">
+      <button class="predict-card" id="predSteep" onclick="predictRamp('steep')">
+        <div class="ramp-scene" style="height:106px">
+          <div class="ramp-shape steep" style="height:62px"></div>
+          <div class="ramp-car car-bob-r" style="left:8%; bottom:68px">🚗</div>
+          <div style="position:absolute; right:9%; bottom:22px; font-size:25px">💨💨</div>
+        </div>
+        <div style="margin-top:8px">The STEEP ramp car goes faster and further <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" id="predSame" onclick="predictRamp('same')">
+        <div class="ramp-scene" style="height:106px">
+          <div class="ramp-car face-right" style="left:15%; bottom:16px">🚗</div>
+          <div style="position:absolute; left:47%; bottom:20px; font-size:24px">🟰</div>
+          <div class="ramp-car" style="right:15%; bottom:16px">🚙</div>
+        </div>
+        <div style="margin-top:8px">Both cars go the same <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="predText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Race &amp; Record ✏️</h2>
+    <p class="hint">Start the race, watch with your eyes, then record what really happened.</p>
+    <div class="race-stage">
+      <div class="lane">
+        <div class="lane-label" style="left:auto; right:10px">🚗 Car A · STEEP ramp</div>
+        <div class="ramp-shape steep"></div>
+        <div class="race-car face-right" id="carA" style="left:4%; bottom:74px">🚗</div>
+        <div id="carAwind" style="position:absolute; font-size:22px; display:none; bottom:24px">💨</div>
+      </div>
+      <div class="lane">
+        <div class="lane-label">🚙 Car B · GENTLE ramp</div>
+        <div class="ramp-shape gentle"></div>
+        <div class="race-car face-right" id="carB" style="left:4%; bottom:40px">🚙</div>
+      </div>
+      <div class="ruler"><span style="left:25%">start</span><span style="left:46%">1 metre</span><span style="left:67%">2 metres</span><span style="left:88%">3 metres</span></div>
+    </div>
+    <div class="center" style="margin-top:12px">
+      <button class="big-btn" id="raceBtn" disabled onclick="startRace()">🏁 Race!</button>
+      <button class="big-btn teal" id="raceAgainBtn" style="display:none" onclick="resetRace()">↺ Race again</button>
+    </div>
+    <div class="race-banner" id="raceBanner">🏆 Car A — the STEEP ramp car — went faster and further!</div>
+
+    <div style="margin-top:14px">
+      <div class="dist-row"><span style="min-width:92px; font-weight:800">🚗 Steep car</span><div class="dist-track"><div class="dist-bar" id="barA" style="background:#ff8787"></div></div><b id="barAText">0 metres</b></div>
+      <div class="dist-row"><span style="min-width:92px; font-weight:800">🚙 Gentle car</span><div class="dist-track"><div class="dist-bar" id="barB" style="background:#74c0fc"></div></div><b id="barBText">0 metres</b></div>
+    </div>
+
+    <p class="q-prompt" style="margin-top:12px">✏️ Record: Which car went further?</p>
+    <div class="q-opts">
+      <button class="q-opt" id="recSteep" disabled onclick="recordRamp('steep')">🚗 The steep ramp car</button>
+      <button class="q-opt" id="recGentle" disabled onclick="recordRamp('gentle')">🚙 The gentle ramp car</button>
+    </div>
+    <p class="q-fb" id="rampFb"></p>
+    <div class="center"><button class="big-btn sun" onclick="speakRampResult()">🔊 Listen to the result</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn" onclick="speakRq()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="rqQ"></p>
+    <div class="q-opts" id="rqOpts"></div>
+    <p class="q-fb" id="rqFb"></p>
+    <p class="q-score" id="rqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn" id="rqAgain" style="display:none" onclick="newRqGame()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+<!-- ================= TAB · PLANT & LIGHT ================= -->
+<section class="panel" id="tabplant">
+
+  <div class="card">
+    <h2>🌱 Does a Plant Need Light?</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words — tap a card to hear it!</p>
+    <div class="vocab-grid" id="plantVocab"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <div class="ask-anim">
+      <div class="scene scene-sun">
+        <div class="sky-emoji" id="plantSun">☀️</div>
+        <div class="plant-emoji">🌱</div>
+        <div class="scene-label">🪟 On the window</div>
+      </div>
+      <div class="scene scene-dark">
+        <div class="sky-emoji" style="animation:none">🌑</div>
+        <div class="plant-emoji">🌱</div>
+        <div class="scene-label">🚪 In a dark cupboard</div>
+      </div>
+    </div>
+    <div class="ask-day" id="plantDay">Tap Play — watch one week go by!</div>
+    <div class="ask-day">🌱 🟰 🌱 The two plants are the SAME — only the place is different!</div>
+    <p class="q-prompt">We put one plant on the window and one plant in a dark cupboard for a week.<br>What will happen to the plant in the dark?</p>
+    <div class="center">
+      <button class="big-btn teal" id="plantPlayBtn" onclick="playPlantWeek()">▶ Play: 1 week</button>
+      <button class="big-btn pink" onclick="speakPlantQ()">🔊 Listen</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">What do YOU think? Tap your prediction.</p>
+    <div class="predict-cards">
+      <button class="predict-card" onclick="invPredict('plant', this, 'It grows tall and green.')">
+        <div class="ramp-scene" style="height:106px">
+          <div style="position:absolute; left:12%; top:8px; font-size:28px">☀️</div>
+          <div class="ramp-car" style="left:40%; bottom:14px; font-size:52px">🌿</div>
+        </div>
+        <div style="margin-top:8px">It grows tall and green <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('plant', this, 'It grows pale and weak.')">
+        <div class="ramp-scene" style="height:106px; background:linear-gradient(#2b3350,#171c30)">
+          <div style="position:absolute; left:12%; top:8px; font-size:28px">🌑</div>
+          <div class="ramp-car" style="left:40%; bottom:14px; font-size:52px"><span class="pale droop">🌾</span></div>
+        </div>
+        <div style="margin-top:8px">It grows pale and weak <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="plantPredText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Look &amp; Record ✏️</h2>
+    <p class="hint">One week has passed. Look at the two plants, then record what you see.</p>
+    <div class="center"><button class="big-btn teal" id="plantTestBtn" disabled onclick="plantTest()">👀 Look after 1 week</button></div>
+    <div class="reveal" id="plantResult" style="margin-top:12px">
+      <div class="ask-anim">
+        <div class="scene scene-sun">
+          <div class="big-result">🌷</div>
+          <div class="scene-label">🪟 Window plant</div>
+          <span class="badge dry">Tall and green!</span>
+        </div>
+        <div class="scene scene-dark">
+          <div class="big-result"><span class="pale droop">🌾</span></div>
+          <div class="scene-label">🚪 Cupboard plant</div>
+          <span class="badge stay">Pale and weak</span>
+        </div>
+      </div>
+      <p class="detail-text">The window plant is tall and green. The cupboard plant is pale and weak — plants need <b>light</b> to grow strong!</p>
+    </div>
+    <p class="q-prompt" style="margin-top:12px">✏️ Record: Which plant is tall and green?</p>
+    <div class="q-opts">
+      <button class="q-opt" id="plantRecWindow" disabled onclick="invRecord('plant', true, 'Recorded! The window plant is tall and green. Plants need light!', 'Look again! Which plant had light?')">🪟 The window plant</button>
+      <button class="q-opt" id="plantRecCupboard" disabled onclick="invRecord('plant', false, '', 'Look again! The cupboard plant had no light.')">🚪 The cupboard plant</button>
+    </div>
+    <p class="q-fb" id="plantFb"></p>
+    <div class="center"><button class="big-btn sun" onclick="speakPlantResult()">🔊 Listen to the result</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn teal" onclick="speakPlantQuiz()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="plantqQ"></p>
+    <div class="q-opts" id="plantqOpts"></div>
+    <p class="q-fb" id="plantqFb"></p>
+    <p class="q-score" id="plantqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn teal" id="plantqAgain" style="display:none" onclick="newPlantQuiz()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+<!-- ================= TAB · WATERPROOF TEST ================= -->
+<section class="panel" id="tabwater">
+
+  <div class="card">
+    <h2>💧 The Waterproof Test</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words — tap a card to hear it!</p>
+    <div class="vocab-grid" id="waterVocab"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <p class="hint">It is raining! We drop water on three things. Which one keeps the things inside <b>dry</b>?</p>
+    <div class="obj-row">
+      <div class="test-obj"><span class="drop" style="left:30%">💧</span>🛍️<span class="tag">Plastic bag</span></div>
+      <div class="test-obj"><span class="drop" style="left:30%; animation-delay:.3s">💧</span>📄<span class="tag">Paper</span></div>
+      <div class="test-obj"><span class="drop" style="left:30%; animation-delay:.6s">💧</span>👕<span class="tag">Cotton shirt</span></div>
+    </div>
+    <div class="ask-day">💧 🟰 💧 Every thing gets the SAME drops of water!</div>
+    <p class="q-prompt">Which material is waterproof — which one keeps water out?</p>
+    <div class="center"><button class="big-btn sky" onclick="speakWaterQ()">🔊 Listen</button></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">What do YOU think? Tap your prediction.</p>
+    <div class="predict-cards" style="grid-template-columns:repeat(3,1fr)">
+      <button class="predict-card" onclick="invPredict('water', this, 'The plastic bag keeps things dry.')">
+        <div style="font-size:52px">🛍️</div>
+        <div style="margin-top:6px">The plastic bag <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('water', this, 'The paper keeps things dry.')">
+        <div style="font-size:52px">📄</div>
+        <div style="margin-top:6px">The paper <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('water', this, 'The cotton shirt keeps things dry.')">
+        <div style="font-size:52px">👕</div>
+        <div style="margin-top:6px">The cotton shirt <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="waterPredText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Test &amp; Record ✏️</h2>
+    <p class="hint">Pour the water, watch what happens, then record the winner.</p>
+    <div class="center"><button class="big-btn sky" id="waterTestBtn" disabled onclick="waterTest()">💧 Pour the water!</button></div>
+    <div class="obj-row">
+      <div class="test-obj" id="waterObjPlastic">🛍️<span class="tag">Plastic bag</span><span class="badge dry reveal" id="waterBadgePlastic">DRY! ✅</span></div>
+      <div class="test-obj" id="waterObjPaper">📄<span class="tag">Paper</span><span class="badge wetb reveal" id="waterBadgePaper">WET 💦</span></div>
+      <div class="test-obj" id="waterObjCotton">👕<span class="tag">Cotton shirt</span><span class="badge wetb reveal" id="waterBadgeCotton">WET 💦</span></div>
+    </div>
+    <p class="detail-text" id="waterResultText">The water is waiting…</p>
+    <p class="q-prompt" style="margin-top:10px">✏️ Record: Which material is waterproof?</p>
+    <div class="q-opts">
+      <button class="q-opt" id="waterRecPlastic" disabled onclick="invRecord('water', true, 'Recorded! Plastic is waterproof — it keeps water out!', 'Look again! Which one stayed dry?')">🧴 Plastic</button>
+      <button class="q-opt" id="waterRecPaper" disabled onclick="invRecord('water', false, '', 'Look again! The paper got wet and soggy.')">📄 Paper</button>
+      <button class="q-opt" id="waterRecCotton" disabled onclick="invRecord('water', false, '', 'Look again! The cotton shirt soaked up the water.')">👕 Cotton</button>
+    </div>
+    <p class="q-fb" id="waterFb"></p>
+    <div class="center"><button class="big-btn sun" onclick="speakWaterResult()">🔊 Listen to the result</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn sky" onclick="speakWaterQuiz()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="waterqQ"></p>
+    <div class="q-opts" id="waterqOpts"></div>
+    <p class="q-fb" id="waterqFb"></p>
+    <p class="q-score" id="waterqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn sky" id="waterqAgain" style="display:none" onclick="newWaterQuiz()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+<!-- ================= TAB · FLOAT OR SINK ================= -->
+<section class="panel" id="tabfloat">
+
+  <div class="card">
+    <h2>🛁 Float or Sink?</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words — tap a card to hear it!</p>
+    <div class="vocab-grid" id="floatVocab"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <p class="hint">Some things <b>float</b> on top of the water. Some things <b>sink</b> to the bottom. Look at the stone!</p>
+    <div class="tank">
+      <div class="waterline">~ ~ ~ water ~ ~ ~</div>
+      <div class="floater" id="floatAskObj" style="top:6%">🪨</div>
+    </div>
+    <p class="q-prompt" style="margin-top:12px">What will the stone do in the water — float, or sink?</p>
+    <div class="center"><button class="big-btn sky" onclick="speakFloatQ()">🔊 Listen</button></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">What do YOU think? Tap your prediction.</p>
+    <div class="predict-cards">
+      <button class="predict-card" onclick="invPredict('float', this, 'The stone will float.')">
+        <div style="font-size:52px">🪨🌊</div>
+        <div style="margin-top:6px">The stone will FLOAT <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('float', this, 'The stone will sink.')">
+        <div style="font-size:52px">🪨⬇️</div>
+        <div style="margin-top:6px">The stone will SINK <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="floatPredText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Test &amp; Record ✏️</h2>
+    <p class="hint">Drop the stone in the water and watch!</p>
+    <div class="center"><button class="big-btn sky" id="floatTestBtn" disabled onclick="floatTest()">🪨 Drop the stone!</button></div>
+    <div class="tank">
+      <div class="waterline">~ ~ ~ water ~ ~ ~</div>
+      <div class="floater" id="floatObj" style="top:6%">🪨</div>
+    </div>
+    <p class="detail-text" id="floatResultText">The stone is waiting…</p>
+    <p class="q-prompt" style="margin-top:10px">✏️ Record: Did the stone float or sink?</p>
+    <div class="q-opts">
+      <button class="q-opt" id="floatRecFloat" disabled onclick="invRecord('float', false, '', 'Look again! The stone went down, down, down.')">🌊 It floated</button>
+      <button class="q-opt" id="floatRecSink" disabled onclick="invRecord('float', true, 'Recorded! The stone sank to the bottom!', 'Look again! Where is the stone now?')">⬇️ It sank</button>
+    </div>
+    <p class="q-fb" id="floatFb"></p>
+  </div>
+
+  <div class="card">
+    <h2>🧪 Try More Things!</h2>
+    <span class="skill">🔍 Scientist skill: Predicting &amp; Testing</span>
+    <p class="hint">Now YOU are the scientist! Tap a thing to drop it in the water.</p>
+    <div class="chip-row" id="floatTestBtns"></div>
+    <div class="tank">
+      <div class="waterline">~ ~ ~ water ~ ~ ~</div>
+      <div class="floater" id="floatObj2" style="top:34%">🪵</div>
+    </div>
+    <p class="detail-text" id="floatText2">Tap a thing to test it!</p>
+    <div class="center"><button class="big-btn sky" onclick="speakFloat2()">🔊 Listen</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn sky" onclick="speakFloatQuiz()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="floatqQ"></p>
+    <div class="q-opts" id="floatqOpts"></div>
+    <p class="q-fb" id="floatqFb"></p>
+    <p class="q-score" id="floatqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn sky" id="floatqAgain" style="display:none" onclick="newFloatQuiz()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+<!-- ================= TAB · MAGNET MAGIC ================= -->
+<section class="panel" id="tabmagnet">
+
+  <div class="card">
+    <h2>🧲 Magnet Magic</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words — tap a card to hear it!</p>
+    <div class="vocab-grid" id="magnetVocab"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <p class="hint">A magnet can <b>pull</b> some things to it — with no touching! Look at the four things.</p>
+    <div class="mag-stage">
+      <div style="font-size:56px">🧲</div>
+      <div class="obj-row">
+        <div class="test-obj">📌<span class="tag">Iron pin</span></div>
+        <div class="test-obj">📎<span class="tag">Paper clip</span></div>
+        <div class="test-obj">🪵<span class="tag">Wood</span></div>
+        <div class="test-obj">🧴<span class="tag">Plastic cup</span></div>
+      </div>
+    </div>
+    <p class="q-prompt" style="margin-top:12px">Which things will the magnet pick up?</p>
+    <div class="center"><button class="big-btn grape" onclick="speakMagnetQ()">🔊 Listen</button></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">What do YOU think? Tap your prediction.</p>
+    <div class="predict-cards">
+      <button class="predict-card" onclick="invPredict('magnet', this, 'Only things made of metal.')">
+        <div style="font-size:52px">🧲📎</div>
+        <div style="margin-top:6px">Only things made of METAL <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('magnet', this, 'Everything — all things.')">
+        <div style="font-size:52px">🧲🧺</div>
+        <div style="margin-top:6px">EVERYTHING — all things <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="magnetPredText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Test &amp; Record ✏️</h2>
+    <p class="hint">Bring the magnet close and watch what flies up!</p>
+    <div class="center"><button class="big-btn grape" id="magnetTestBtn" disabled onclick="magnetTest()">🧲 Try the magnet!</button></div>
+    <div class="mag-stage" style="margin-top:12px">
+      <div style="font-size:56px">🧲</div>
+      <div class="obj-row">
+        <div class="test-obj" id="magObjPin">📌<span class="tag">Iron pin</span><span class="badge pick reveal" id="magBadgePin">Picked up!</span></div>
+        <div class="test-obj" id="magObjClip">📎<span class="tag">Paper clip</span><span class="badge pick reveal" id="magBadgeClip">Picked up!</span></div>
+        <div class="test-obj" id="magObjWood">🪵<span class="tag">Wood</span><span class="badge stay reveal" id="magBadgeWood">Stays</span></div>
+        <div class="test-obj" id="magObjPlastic">🧴<span class="tag">Plastic cup</span><span class="badge stay reveal" id="magBadgePlastic">Stays</span></div>
+      </div>
+    </div>
+    <p class="detail-text" id="magnetResultText">The magnet is waiting…</p>
+    <p class="q-prompt" style="margin-top:10px">✏️ Record: What does a magnet pick up?</p>
+    <div class="q-opts">
+      <button class="q-opt" id="magnetRecMetal" disabled onclick="invRecord('magnet', true, 'Recorded! Magnets pick up things made of metal!', 'Look again! What flew up to the magnet?')">📎 Things made of metal</button>
+      <button class="q-opt" id="magnetRecWood" disabled onclick="invRecord('magnet', false, '', 'Look again! The wood did not move.')">🪵 Things made of wood</button>
+      <button class="q-opt" id="magnetRecAll" disabled onclick="invRecord('magnet', false, '', 'Look again! Only some things flew up.')">🧺 All things</button>
+    </div>
+    <p class="q-fb" id="magnetFb"></p>
+    <div class="center"><button class="big-btn sun" onclick="speakMagnetResult()">🔊 Listen to the result</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn grape" onclick="speakMagnetQuiz()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="magnetqQ"></p>
+    <div class="q-opts" id="magnetqOpts"></div>
+    <p class="q-fb" id="magnetqFb"></p>
+    <p class="q-score" id="magnetqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn grape" id="magnetqAgain" style="display:none" onclick="newMagnetQuiz()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+<!-- ================= TAB · MELTING ICE ================= -->
+<section class="panel" id="tabmelt">
+
+  <div class="card">
+    <h2>🧊 Melting Ice</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words — tap a card to hear it!</p>
+    <div class="vocab-grid" id="meltVocab"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <div class="ask-anim">
+      <div class="scene scene-sun">
+        <div class="sky-emoji">☀️</div>
+        <div class="plant-emoji">🧊</div>
+        <div class="scene-label">☀️ Ice in the sun</div>
+      </div>
+      <div class="scene" style="background:linear-gradient(#cfe3ee,#9fb8c8)">
+        <div class="sky-emoji" style="animation:none">🌳</div>
+        <div class="plant-emoji">🧊</div>
+        <div class="scene-label">🌳 Ice in the shade</div>
+      </div>
+    </div>
+    <div class="ask-day">🧊 🟰 🧊 The two ice cubes are the SAME — only the place is different!</div>
+    <p class="q-prompt">One ice cube sits in the sun. One ice cube sits in the shade.<br>Which ice cube will melt first?</p>
+    <div class="center"><button class="big-btn sky" onclick="speakMeltQ()">🔊 Listen</button></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">What do YOU think? Tap your prediction.</p>
+    <div class="predict-cards">
+      <button class="predict-card" onclick="invPredict('melt', this, 'The ice in the sun melts first.')">
+        <div style="font-size:52px">☀️🧊</div>
+        <div style="margin-top:6px">The ice in the SUN melts first <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('melt', this, 'The ice in the shade melts first.')">
+        <div style="font-size:52px">🌳🧊</div>
+        <div style="margin-top:6px">The ice in the SHADE melts first <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="meltPredText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Watch &amp; Record ✏️</h2>
+    <p class="hint">Wait and watch the two ice cubes!</p>
+    <div class="center"><button class="big-btn sky" id="meltTestBtn" disabled onclick="meltTest()">⏰ Wait and watch</button></div>
+    <div class="ask-anim" style="margin-top:12px">
+      <div class="scene scene-sun">
+        <div class="big-result"><span class="melt-obj" id="meltIceSun">🧊</span></div>
+        <div class="scene-label">☀️ In the sun</div>
+        <span class="badge wetb reveal" id="meltBadgeSun">All melted! 💧</span>
+      </div>
+      <div class="scene" style="background:linear-gradient(#cfe3ee,#9fb8c8)">
+        <div class="big-result"><span class="melt-obj" id="meltIceShade">🧊</span></div>
+        <div class="scene-label">🌳 In the shade</div>
+        <span class="badge stay reveal" id="meltBadgeShade">Still ice!</span>
+      </div>
+    </div>
+    <p class="detail-text" id="meltResultText">The ice cubes are waiting…</p>
+    <p class="q-prompt" style="margin-top:10px">✏️ Record: Which ice cube melted first?</p>
+    <div class="q-opts">
+      <button class="q-opt" id="meltRecSun" disabled onclick="invRecord('melt', true, 'Recorded! The ice in the sun melted first — the sun is warm!', 'Look again! Which place is warm?')">☀️ The ice in the sun</button>
+      <button class="q-opt" id="meltRecShade" disabled onclick="invRecord('melt', false, '', 'Look again! The shade is cool — that ice is still there.')">🌳 The ice in the shade</button>
+    </div>
+    <p class="q-fb" id="meltFb"></p>
+    <div class="center"><button class="big-btn sun" onclick="speakMeltResult()">🔊 Listen to the result</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn sky" onclick="speakMeltQuiz()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="meltqQ"></p>
+    <div class="q-opts" id="meltqOpts"></div>
+    <p class="q-fb" id="meltqFb"></p>
+    <p class="q-score" id="meltqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn sky" id="meltqAgain" style="display:none" onclick="newMeltQuiz()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+<!-- ================= TAB · SEEDS & WATER ================= -->
+<section class="panel" id="tabseed">
+
+  <div class="card">
+    <h2>🫘 Do Seeds Need Water?</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words — tap a card to hear it!</p>
+    <div class="vocab-grid" id="seedVocab"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <div class="ask-anim">
+      <div class="scene scene-sun">
+        <div class="sky-emoji" style="animation:none">💧</div>
+        <div class="plant-emoji">🫘</div>
+        <div class="scene-label">💧 Seed WITH water</div>
+      </div>
+      <div class="scene" style="background:linear-gradient(#f3e2c7,#e0c9a6)">
+        <div class="sky-emoji" style="animation:none">🚫💧</div>
+        <div class="plant-emoji">🫘</div>
+        <div class="scene-label">🏜️ Seed with NO water</div>
+      </div>
+    </div>
+    <div class="ask-day" id="seedDay">Tap Play — watch one week go by!</div>
+    <div class="ask-day">🫘 🟰 🫘 The two seeds are the SAME — only the water is different!</div>
+    <p class="q-prompt">We water one seed every day. The other seed gets no water at all.<br>What will happen to the seed with no water?</p>
+    <div class="center">
+      <button class="big-btn teal" id="seedPlayBtn" onclick="playSeedWeek()">▶ Play: 1 week</button>
+      <button class="big-btn pink" onclick="speakSeedQ()">🔊 Listen</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">What do YOU think? Tap your prediction.</p>
+    <div class="predict-cards">
+      <button class="predict-card" onclick="invPredict('seed', this, 'It will not grow.')">
+        <div style="font-size:52px">🫘🏜️</div>
+        <div style="margin-top:6px">It will NOT grow <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('seed', this, 'It grows tall and green.')">
+        <div style="font-size:52px">🌿</div>
+        <div style="margin-top:6px">It grows tall and green <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="seedPredText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Look &amp; Record ✏️</h2>
+    <p class="hint">One week has passed. Look at the two pots!</p>
+    <div class="center"><button class="big-btn teal" id="seedTestBtn" disabled onclick="seedTest()">👀 Look after 1 week</button></div>
+    <div class="reveal" id="seedResult" style="margin-top:12px">
+      <div class="ask-anim">
+        <div class="scene scene-sun">
+          <div class="big-result">🌱</div>
+          <div class="scene-label">💧 With water</div>
+          <span class="badge dry">It grew!</span>
+        </div>
+        <div class="scene" style="background:linear-gradient(#f3e2c7,#e0c9a6)">
+          <div class="big-result">🫘</div>
+          <div class="scene-label">🏜️ No water</div>
+          <span class="badge stay">Still a seed</span>
+        </div>
+      </div>
+      <p class="detail-text">The watered seed sprouted and grew! The dry seed did not grow at all — seeds need <b>water</b> to grow!</p>
+    </div>
+    <p class="q-prompt" style="margin-top:12px">✏️ Record: Which seed grew?</p>
+    <div class="q-opts">
+      <button class="q-opt" id="seedRecWater" disabled onclick="invRecord('seed', true, 'Recorded! The seed with water grew. Seeds need water!', 'Look again! Which seed got water every day?')">💧 The seed with water</button>
+      <button class="q-opt" id="seedRecDry" disabled onclick="invRecord('seed', false, '', 'Look again! The dry seed is still just a seed.')">🏜️ The seed with no water</button>
+    </div>
+    <p class="q-fb" id="seedFb"></p>
+    <div class="center"><button class="big-btn sun" onclick="speakSeedResult()">🔊 Listen to the result</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn teal" onclick="speakSeedQuiz()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="seedqQ"></p>
+    <div class="q-opts" id="seedqOpts"></div>
+    <p class="q-fb" id="seedqFb"></p>
+    <p class="q-score" id="seedqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn teal" id="seedqAgain" style="display:none" onclick="newSeedQuiz()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+<!-- ================= TAB · WIND TEST ================= -->
+<section class="panel" id="tabwind">
+
+  <div class="card">
+    <h2>🌬️ The Wind Test</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words — tap a card to hear it!</p>
+    <div class="vocab-grid" id="windVocab"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <p class="hint">Wind is moving air — and moving air can <b>push</b>! The fan is ready to blow.</p>
+    <div class="mag-stage" style="border-color:#c5f6fa; background:#f2fbfd">
+      <div style="font-size:52px">🌀</div>
+      <div class="obj-row">
+        <div class="test-obj">🧻<span class="tag">Tissue</span></div>
+        <div class="test-obj">🍃<span class="tag">Leaf</span></div>
+        <div class="test-obj">🪨<span class="tag">Stone</span></div>
+        <div class="test-obj">📕<span class="tag">Book</span></div>
+      </div>
+    </div>
+    <p class="q-prompt" style="margin-top:12px">When the fan blows, which things will move?</p>
+    <div class="center"><button class="big-btn sky" onclick="speakWindQ()">🔊 Listen</button></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">What do YOU think? Tap your prediction.</p>
+    <div class="predict-cards">
+      <button class="predict-card" onclick="invPredict('wind', this, 'Only the light things move.')">
+        <div style="font-size:52px">🧻💨</div>
+        <div style="margin-top:6px">Only the LIGHT things move <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('wind', this, 'Everything moves.')">
+        <div style="font-size:52px">🌬️🧺</div>
+        <div style="margin-top:6px">EVERYTHING moves <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="windPredText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Test &amp; Record ✏️</h2>
+    <p class="hint">Turn on the fan and watch what the wind can push!</p>
+    <div class="center"><button class="big-btn sky" id="windTestBtn" disabled onclick="windTest()">🌬️ Blow the fan!</button></div>
+    <div class="mag-stage" style="border-color:#c5f6fa; background:#f2fbfd; margin-top:12px">
+      <div style="font-size:52px">🌀💨</div>
+      <div class="obj-row">
+        <div class="test-obj" id="windObjTissue">🧻<span class="tag">Tissue</span><span class="badge dry reveal" id="windBadgeTissue">It moved!</span></div>
+        <div class="test-obj" id="windObjLeaf">🍃<span class="tag">Leaf</span><span class="badge dry reveal" id="windBadgeLeaf">It moved!</span></div>
+        <div class="test-obj" id="windObjStone">🪨<span class="tag">Stone</span><span class="badge stay reveal" id="windBadgeStone">Stays</span></div>
+        <div class="test-obj" id="windObjBook">📕<span class="tag">Book</span><span class="badge stay reveal" id="windBadgeBook">Stays</span></div>
+      </div>
+    </div>
+    <p class="detail-text" id="windResultText">The fan is waiting…</p>
+    <p class="q-prompt" style="margin-top:10px">✏️ Record: What did the wind move?</p>
+    <div class="q-opts">
+      <button class="q-opt" id="windRecLight" disabled onclick="invRecord('wind', true, 'Recorded! The wind moved the light things — the tissue and the leaf!', 'Look again! What flew away?')">🧻 The light things</button>
+      <button class="q-opt" id="windRecStone" disabled onclick="invRecord('wind', false, '', 'Look again! The stone is heavy — it did not move.')">🪨 The heavy stone</button>
+      <button class="q-opt" id="windRecAll" disabled onclick="invRecord('wind', false, '', 'Look again! Only some things moved.')">🧺 Everything</button>
+    </div>
+    <p class="q-fb" id="windFb"></p>
+    <div class="center"><button class="big-btn sun" onclick="speakWindResult()">🔊 Listen to the result</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn sky" onclick="speakWindQuiz()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="windqQ"></p>
+    <div class="q-opts" id="windqOpts"></div>
+    <p class="q-fb" id="windqFb"></p>
+    <p class="q-score" id="windqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn sky" id="windqAgain" style="display:none" onclick="newWindQuiz()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+<!-- ================= TAB · SHAKE IT (SOUNDS) ================= -->
+<section class="panel" id="tabshake">
+
+  <div class="card">
+    <h2>🔔 Shake It!</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words — tap a card to hear it!</p>
+    <div class="vocab-grid" id="shakeVocab"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <p class="hint">Sounds happen when things shake and move very fast! Here are four things to shake.</p>
+    <div class="obj-row">
+      <div class="test-obj">🔔<span class="tag">Bell</span></div>
+      <div class="test-obj">🪇<span class="tag">Maraca</span></div>
+      <div class="test-obj">🥁<span class="tag">Drum</span></div>
+      <div class="test-obj">🧸<span class="tag">Teddy</span></div>
+    </div>
+    <p class="q-prompt" style="margin-top:10px">When we shake them, will ALL of them make a sound?</p>
+    <div class="center"><button class="big-btn sun" onclick="speakShakeQ()">🔊 Listen</button></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">What do YOU think? Tap your prediction.</p>
+    <div class="predict-cards">
+      <button class="predict-card" onclick="invPredict('shake', this, 'No — the teddy will be quiet.')">
+        <div style="font-size:52px">🧸🤫</div>
+        <div style="margin-top:6px">NO — the teddy will be quiet <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('shake', this, 'Yes — all of them make a sound.')">
+        <div style="font-size:52px">🔊🧺</div>
+        <div style="margin-top:6px">YES — all of them make a sound <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="shakePredText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Shake &amp; Record ✏️</h2>
+    <p class="hint">Shake everything and listen carefully!</p>
+    <div class="center"><button class="big-btn sun" id="shakeTestBtn" disabled onclick="shakeTest()">🤲 Shake them all!</button></div>
+    <div class="obj-row">
+      <div class="test-obj"><span id="shakeObjBell">🔔</span><span class="tag">Bell — “Ring!”</span><span class="badge dry reveal" id="shakeBadgeBell">SOUND 🔊</span></div>
+      <div class="test-obj"><span id="shakeObjMaraca">🪇</span><span class="tag">Maraca — “Shaka!”</span><span class="badge dry reveal" id="shakeBadgeMaraca">SOUND 🔊</span></div>
+      <div class="test-obj"><span id="shakeObjDrum">🥁</span><span class="tag">Drum — “Boom!”</span><span class="badge dry reveal" id="shakeBadgeDrum">SOUND 🔊</span></div>
+      <div class="test-obj"><span id="shakeObjTeddy">🧸</span><span class="tag">Teddy — “…”</span><span class="badge stay reveal" id="shakeBadgeTeddy">Quiet 🤫</span></div>
+    </div>
+    <p class="detail-text" id="shakeResultText">Everything is quiet… for now!</p>
+    <p class="q-prompt" style="margin-top:10px">✏️ Record: Which thing was quiet?</p>
+    <div class="q-opts">
+      <button class="q-opt" id="shakeRecTeddy" disabled onclick="invRecord('shake', true, 'Recorded! The teddy was quiet — it is soft and does not shake and ring!', 'Listen again! Which one made no sound?')">🧸 The teddy</button>
+      <button class="q-opt" id="shakeRecBell" disabled onclick="invRecord('shake', false, '', 'Listen again! The bell went ring, ring!')">🔔 The bell</button>
+      <button class="q-opt" id="shakeRecDrum" disabled onclick="invRecord('shake', false, '', 'Listen again! The drum went boom, boom!')">🥁 The drum</button>
+    </div>
+    <p class="q-fb" id="shakeFb"></p>
+    <div class="center"><button class="big-btn sun" onclick="speakShakeResult()">🔊 Listen to the result</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn sun" onclick="speakShakeQuiz()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="shakeqQ"></p>
+    <div class="q-opts" id="shakeqOpts"></div>
+    <p class="q-fb" id="shakeqFb"></p>
+    <p class="q-score" id="shakeqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn sun" id="shakeqAgain" style="display:none" onclick="newShakeQuiz()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+<!-- ================= TAB · SUN & SHADOWS ================= -->
+<section class="panel" id="tabshadow">
+
+  <div class="card">
+    <h2>🌞 Sun &amp; Shadows</h2>
+    <span class="skill">🔍 Scientist skill: Asking Questions · Predicting · Recording Results</span>
+    <p class="hint" style="margin-top:8px">📚 Core words — tap a card to hear it!</p>
+    <div class="vocab-grid" id="shadowVocab"></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 1 · Ask ❓</h2>
+    <p class="hint">The sun moves across the sky all day. The tree cannot move — but its <b>shadow</b> can change!</p>
+    <div class="shadow-stage">
+      <div class="shadow-sun" id="shadowSunAsk" style="left:8%; top:10px">🌞</div>
+      <div class="shadow-tree">🌳</div>
+      <div class="shadow-shape" style="width:130px; transform:translateX(6px)"></div>
+    </div>
+    <p class="q-prompt" style="margin-top:12px">At lunch time, the sun is high in the sky.<br>What will the tree's shadow look like at lunch time?</p>
+    <div class="center"><button class="big-btn sun" onclick="speakShadowQ()">🔊 Listen</button></div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 · Predict 🤔</h2>
+    <p class="hint">What do YOU think? Tap your prediction.</p>
+    <div class="predict-cards">
+      <button class="predict-card" onclick="invPredict('shadow', this, 'At lunch time, the shadow will be short.')">
+        <div style="font-size:52px">🌳<span style="font-size:26px">▬</span></div>
+        <div style="margin-top:6px">The shadow will be SHORT <span class="tick">✅</span></div>
+      </button>
+      <button class="predict-card" onclick="invPredict('shadow', this, 'At lunch time, the shadow will be long.')">
+        <div style="font-size:52px">🌳<span style="font-size:26px">▬▬▬</span></div>
+        <div style="margin-top:6px">The shadow will be LONG <span class="tick">✅</span></div>
+      </button>
+    </div>
+    <p class="detail-text" id="shadowPredText">Tap a card to make your prediction!</p>
+  </div>
+
+  <div class="card">
+    <h2>Step 3 · Watch the Day &amp; Record ✏️</h2>
+    <p class="hint">Watch the sun travel across the sky — morning, lunch time, afternoon!</p>
+    <div class="center"><button class="big-btn sun" id="shadowTestBtn" disabled onclick="shadowTest()">▶ Watch the day</button></div>
+    <div class="shadow-stage" style="margin-top:12px">
+      <div class="shadow-sun" id="shadowSun" style="left:8%; top:10px">🌞</div>
+      <div class="shadow-tree">🌳</div>
+      <div class="shadow-shape" id="shadowShape" style="width:130px; transform:translateX(6px)"></div>
+    </div>
+    <div class="ask-day" id="shadowDayLabel">☀️ Morning — the shadow is LONG</div>
+    <p class="q-prompt" style="margin-top:10px">✏️ Record: At lunch time, the tree's shadow is…</p>
+    <div class="q-opts">
+      <button class="q-opt" id="shadowRecShort" disabled onclick="invRecord('shadow', true, 'Recorded! At lunch time the sun is high, so the shadow is short!', 'Watch again! Look at the shadow when the sun is high.')">▬ Short</button>
+      <button class="q-opt" id="shadowRecLong" disabled onclick="invRecord('shadow', false, '', 'Watch again! The long shadows are in the morning and afternoon.')">▬▬▬ Long</button>
+    </div>
+    <p class="q-fb" id="shadowFb"></p>
+    <div class="center"><button class="big-btn sun" onclick="speakShadowResult()">🔊 Listen to the result</button></div>
+  </div>
+
+  <div class="card">
+    <div class="q-top"><h2>🎮 Quiz: What Did We Learn?</h2><button class="big-btn sun" onclick="speakShadowQuiz()">🔊</button></div>
+    <span class="skill">🔍 Scientist skill: Remembering the Big Idea</span>
+    <p class="q-prompt" id="shadowqQ"></p>
+    <div class="q-opts" id="shadowqOpts"></div>
+    <p class="q-fb" id="shadowqFb"></p>
+    <p class="q-score" id="shadowqScore">Score: 0 / 5</p>
+    <div class="center"><button class="big-btn sun" id="shadowqAgain" style="display:none" onclick="newShadowQuiz()">↺ Play again</button></div>
+  </div>
+
+</section>
+
+</main>
+
+<div class="foot">Fun Science – Grade 1 · Cambridge · Made for curious young scientists 🌱</div>
+<div class="toast" id="toast">⭐ Great job!</div>
+
+<script>
+/* ================= Speech (English, device voice — same as the Maths app) ================= */
+/* Prefer a CLEAR, bright FEMALE voice (her choice 2026-11-17, replacing the
+   clear-male preference). Male voices are only a last resort, and the pitch
+   is raised a little to keep the voice bright and easy for children to hear. */
+const CLEAR_FEMALE_VOICES = ['microsoft sonia','google uk english female','microsoft libby','microsoft maisie','samantha','microsoft aria','microsoft jenny','karen','google us english','microsoft zira'];
+const MALE_VOICES = ['microsoft ryan','daniel','microsoft christopher','microsoft guy','tom','alex','microsoft eric','aaron','google uk english male','microsoft george','fred'];
+function pickVoice(vs){
+  const en = vs.filter(x=>/^en([-_]|$)/i.test(x.lang));
+  if(!en.length) return null;
+  for(const name of CLEAR_FEMALE_VOICES){
+    const hit = en.find(x=>x.name.toLowerCase().includes(name));
+    if(hit) return hit;
+  }
+  const notMale = x=>!MALE_VOICES.some(d=>x.name.toLowerCase().includes(d));
+  return en.filter(x=>/^en[-_]GB/i.test(x.lang)).find(notMale) || en.find(notMale) || en[0];
+}
+function makeUtterance(text, rate){
+  const u = new SpeechSynthesisUtterance(String(text));
+  u.lang = 'en-GB'; u.rate = rate || 0.88; u.pitch = 1.15;
+  const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  const v = pickVoice(vs);
+  if(v) u.voice = v;
+  return u;
+}
+function speak(text, rate){
+  try{
+    speechSynthesis.cancel();
+    speechSynthesis.speak(makeUtterance(text, rate));
+  }catch(e){ /* no voice on this device – the pictures still teach */ }
+}
+if(window.speechSynthesis){ try{ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = ()=>speechSynthesis.getVoices(); }catch(e){} }
+
+/* ================= Stars ================= */
+let stars = 0;
+try{ stars = parseInt(localStorage.getItem('camScienceStarsV1')||'0',10)||0; }catch(e){}
+function renderStars(){ document.getElementById('starCount').textContent = stars; }
+function addStar(){
+  stars++; try{ localStorage.setItem('camScienceStarsV1', String(stars)); }catch(e){}
+  renderStars(); showToast('⭐ Great job! +1 star');
+}
+let toastTimer = null;
+function showToast(msg){
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'), 1600);
+}
+
+/* ================= Tabs ================= */
+function showTab(id, btn){
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.toggle('active', p.id===id));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===id));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ================= Helpers ================= */
+const $ = id=>document.getElementById(id);
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function setFb(id, ok, msg){ const f=$(id); f.textContent=msg; f.className='q-fb '+(ok?'good':'bad'); }
+/* Generic 10-round quiz: renderOpts builds option buttons; check(isRight, btn, fbId, state, nextFn) */
+function quizAnswer(state, ok, btn, fbId, msg, nextFn, scoreId, total){
+  if(state.lock) return;
+  if(ok){
+    state.lock=true; btn.classList.add('right');
+    if(!state.tried){ state.right++; addStar(); }
+    setFb(fbId, true, msg);
+    $(scoreId).textContent='Score: '+state.right+' / '+total;
+    setTimeout(nextFn, 1100);
+  }else{
+    state.tried=true; btn.classList.add('wrong'); btn.disabled=true;
+    setFb(fbId, false, msg);
+  }
+}
+
+/* ================= RAMP RACE TAB (Be a Scientist) ================= */
+let rampPred=null, rampRaced=false, rampStarDone=false, raceTimers=[];
+function speakRampQ(){
+  speak('Two toy cars roll down two ramps. The two cars are the same. One ramp is steep and high. One ramp is gentle and low. Which car will go faster and further?');
+}
+function predictRamp(which){
+  rampPred=which;
+  $('predSteep').classList.toggle('sel', which==='steep');
+  $('predSame').classList.toggle('sel', which==='same');
+  /* Only read the prediction aloud — no judging it right or wrong. */
+  const pred = which==='steep'
+    ? 'The steep ramp car goes faster and further.'
+    : 'Both cars go the same.';
+  $('predText').textContent = 'Your prediction: ' + pred;
+  if(!rampRaced) $('raceBtn').disabled=false;
+  speak(pred);
+}
+function startRace(){
+  if(!rampPred || rampRaced) return;
+  rampRaced=true; $('raceBtn').disabled=true;
+  speak('Ready, set, go!');
+  /* One continuous CSS motion per car (descent flows straight into the flat
+     run — no pause at the foot of the ramp), slower than before. */
+  $('carA').classList.add('racing-a');
+  $('carB').classList.add('racing-b');
+  raceTimers.push(setTimeout(()=>{
+    const wind=$('carAwind'); wind.style.display='block'; wind.style.left='56%';
+  }, 1400));
+  raceTimers.push(setTimeout(finishRace, 4650));
+}
+function finishRace(){
+  $('carAwind').style.display='none';
+  $('raceBanner').classList.add('show');
+  $('barA').style.width='100%'; $('barB').style.width='50%';
+  $('barAText').textContent='3 metres'; $('barBText').textContent='1.5 metres';
+  $('recSteep').disabled=false; $('recGentle').disabled=false;
+  $('raceAgainBtn').style.display='inline-flex';
+  speak('The steep ramp car went faster and further! Now record the result.');
+}
+function recordRamp(which){
+  if(!rampRaced) return;
+  if(which==='steep'){
+    $('recSteep').classList.add('right'); $('recGentle').classList.remove('wrong');
+    setFb('rampFb', true, 'Recorded! The steep ramp car went further — 3 metres. You worked like a scientist! 🔬');
+    if(!rampStarDone){ rampStarDone=true; addStar(); }
+    speak('Recorded! The steep ramp car went further.');
+  }else{
+    $('recGentle').classList.add('wrong');
+    setFb('rampFb', false, 'Look again! Follow Car A — it stopped much, much further away.');
+    speak('Look again! Which car stopped further away?');
+  }
+}
+function resetRace(){
+  raceTimers.forEach(clearTimeout); raceTimers=[];
+  rampRaced=false;
+  const A=$('carA'), B=$('carB');
+  A.classList.remove('racing-a'); B.classList.remove('racing-b');
+  A.style.left='4%'; A.style.bottom='74px';
+  B.style.left='4%'; B.style.bottom='40px';
+  $('carAwind').style.display='none';
+  $('raceBanner').classList.remove('show');
+  $('barA').style.width='0'; $('barB').style.width='0';
+  $('barAText').textContent='0 metres'; $('barBText').textContent='0 metres';
+  $('rampFb').textContent='';
+  $('recSteep').disabled=true; $('recGentle').disabled=true;
+  $('recSteep').classList.remove('right'); $('recGentle').classList.remove('wrong');
+  $('raceAgainBtn').style.display='none';
+  $('raceBtn').disabled = !rampPred;
+}
+function speakRampResult(){
+  speak('The car on the steep ramp went faster and further. It rolled three metres. The car on the gentle ramp rolled one and a half metres.');
+}
+
+/* --- Core vocabulary cards (Ramp tab header) --- */
+const VOCAB = [
+  {e:'📐', w:'Ramp', d:'A ramp is a flat board. It is high at one end and low at the other. Cars can roll down it.'},
+  {e:'🎢', w:'Steep', d:'Steep means very sharp, like a big, big slide. Things go down very fast!'},
+  {e:'🛝', w:'Gentle', d:'Gentle means a little bit at a time, like a small slide. Things go down slowly.'},
+  {e:'💨', w:'Speed', d:'Speed is how fast something goes. Fast, or slow!'},
+  {e:'📏', w:'Distance', d:'Distance is how far something goes. We can measure it!'},
+  {e:'⚖️', w:'Fair test', d:'A fair test is fair. We change only one thing, and we keep everything else the same.'},
+  {e:'🤔', w:'Predict', d:'Predict means: say what you think will happen, before you try.'},
+  {e:'✏️', w:'Record', d:'Record means: write down, or mark, what really happened.'},
+  {e:'💪', w:'Push', d:'A push moves things away from you. Push a ball, and it rolls away!'},
+  {e:'🏁', w:'Race', d:'A race is a game. Who is the fastest?'},
+  {e:'🛞', w:'Wheel', d:'Wheels are round. Wheels help things roll.'},
+  {e:'⏱️', w:'Fast', d:'Fast means moving quickly. Zoom!'}
+];
+function buildVocabInto(gridId, list){
+  const g=$(gridId); if(!g) return; g.innerHTML='';
+  list.forEach(v=>{
+    const b=document.createElement('button'); b.className='vocab-card';
+    b.innerHTML='<span class="ve">'+v.e+'</span><span class="vw">'+v.w+'</span>';
+    b.onclick=()=>speak(v.w+'. '+v.d);
+    g.appendChild(b);
+  });
+}
+
+/* --- Quiz: review the principle of the experiment (5 questions) --- */
+const RQ_POOL = [
+  {q:'Which ramp makes a toy car go faster?', opts:['The steep ramp','The gentle ramp','Both are the same'], a:0, why:'A steep ramp makes the car speed up more.'},
+  {q:'In a fair test, the two cars must be…', opts:['The same','Very different','Any cars at all'], a:0, why:'A fair test keeps the cars the same — only the ramp changes.'},
+  {q:'In our race, which car went further?', opts:['The gentle ramp car','The steep ramp car'], a:1, why:'The steep ramp car rolled 3 metres — much further!'},
+  {q:'How far did the steep ramp car roll?', opts:['1 metre','3 metres','10 metres'], a:1, why:'We measured it on the track: 3 metres.'},
+  {q:'Why did the steep ramp car go further?', opts:['The car is magic','The gentle car was sleeping','The steep ramp gives the car a bigger push'], a:2, why:'A higher, steeper ramp pushes the car faster, so it rolls further.'}
+];
+const rq = {round:0, right:0, tried:false, lock:false, cur:null, order:[]};
+function newRqGame(){
+  rq.round=0; rq.right=0; rq.order=shuffle(RQ_POOL);
+  $('rqAgain').style.display='none'; $('rqScore').textContent='Score: 0 / 5';
+  nextRq();
+}
+function nextRq(){
+  if(rq.round>=5){
+    $('rqQ').textContent='Quiz over! You got '+rq.right+' out of 5. 🎉 You remember the big idea!';
+    $('rqOpts').innerHTML=''; $('rqFb').textContent=''; $('rqAgain').style.display='inline-flex';
+    speak('Quiz over! You got '+rq.right+' out of five.'); return;
+  }
+  rq.cur=rq.order[rq.round]; rq.tried=false; rq.lock=false;
+  $('rqQ').textContent='Question '+(rq.round+1)+' of 5: '+rq.cur.q; $('rqFb').textContent='';
+  const box=$('rqOpts'); box.innerHTML='';
+  rq.cur.opts.forEach((o,i)=>{
+    const b=document.createElement('button'); b.className='q-opt'; b.textContent=o;
+    b.onclick=()=>{ const ok=i===rq.cur.a; quizAnswer(rq, ok, b, 'rqFb',
+      ok ? 'Yes! '+rq.cur.why : 'Not quite. '+rq.cur.why,
+      function(){ rq.round++; nextRq(); }, 'rqScore', 5); };
+    box.appendChild(b);
+  });
+  speakRq();
+}
+function speakRq(){ if(rq.cur) speak(rq.cur.q); }
+
+/* ================= INVESTIGATION TABS (shared engine) ================= */
+const INV = {};
+function invPredict(key, btn, spoken){
+  if(!INV[key]) INV[key]={};
+  INV[key].pred=true;
+  btn.parentElement.querySelectorAll('.predict-card').forEach(c=>c.classList.remove('sel'));
+  btn.classList.add('sel');
+  $(key+'PredText').textContent='Your prediction: '+spoken;
+  speak(spoken); /* only the prediction — no judging */
+  if(!INV[key].tested) $(key+'TestBtn').disabled=false;
+}
+function invRecord(key, ok, goodMsg, badMsg){
+  if(!INV[key] || !INV[key].tested) return;
+  if(ok){
+    setFb(key+'Fb', true, goodMsg);
+    if(!INV[key].star){ INV[key].star=true; addStar(); }
+    speak(goodMsg);
+  }else{
+    setFb(key+'Fb', false, badMsg);
+    speak(badMsg);
+  }
+}
+function startQuiz(st, p, pool){
+  st.round=0; st.right=0; st.order=shuffle(pool);
+  $(p+'Again').style.display='none'; $(p+'Score').textContent='Score: 0 / '+pool.length;
+  nextQuiz(st, p, pool);
+}
+function nextQuiz(st, p, pool){
+  if(st.round>=pool.length){
+    $(p+'Q').textContent='Quiz over! You got '+st.right+' out of '+pool.length+'. 🎉';
+    $(p+'Opts').innerHTML=''; $(p+'Fb').textContent=''; $(p+'Again').style.display='inline-flex';
+    speak('Quiz over! You got '+st.right+' out of '+pool.length+'.'); return;
+  }
+  st.cur=st.order[st.round]; st.tried=false; st.lock=false;
+  $(p+'Q').textContent='Question '+(st.round+1)+' of '+pool.length+': '+st.cur.q;
+  $(p+'Fb').textContent='';
+  const box=$(p+'Opts'); box.innerHTML='';
+  st.cur.opts.forEach((o,i)=>{
+    const b=document.createElement('button'); b.className='q-opt'; b.textContent=o;
+    b.onclick=()=>{ const ok=i===st.cur.a; quizAnswer(st, ok, b, p+'Fb',
+      ok ? 'Yes! '+st.cur.why : 'Not quite. '+st.cur.why,
+      function(){ st.round++; nextQuiz(st, p, pool); }, p+'Score', pool.length); };
+    box.appendChild(b);
+  });
+  speak(st.cur.q);
+}
+function quizState(){ return {round:0, right:0, tried:false, lock:false, cur:null, order:[]}; }
+
+/* ================= PLANT & LIGHT ================= */
+const PLANT_VOCAB = [
+  {e:'🌱', w:'Seed', d:'A seed is a tiny baby plant. We put it in the soil.'},
+  {e:'☀️', w:'Light', d:'Light comes from the sun. Plants need light to grow.'},
+  {e:'💧', w:'Water', d:'Water is wet. Plants drink water with their roots.'},
+  {e:'🌿', w:'Grow', d:'To grow is to get bigger and bigger.'},
+  {e:'🟢', w:'Green', d:'Green is the colour of healthy leaves.'},
+  {e:'🟡', w:'Pale', d:'Pale means a weak, light colour — not strong and green.'},
+  {e:'🪴', w:'Soil', d:'Soil is the brown earth. Plants live in soil.'},
+  {e:'🍃', w:'Leaf', d:'Leaves are the green parts of a plant. They catch the light.'},
+  {e:'🌸', w:'Flower', d:'A flower is the pretty part of a plant.'},
+  {e:'🌞', w:'Sun', d:'The sun gives us light and warmth.'},
+  {e:'⬆️', w:'Tall', d:'Tall means high up, like a big tree.'},
+  {e:'💪', w:'Strong', d:'Strong means not weak. A strong plant stands up tall.'}
+];
+function speakPlantQ(){
+  speak('We put one plant on the window and one plant in a dark cupboard for a week. The two plants are the same. What will happen to the plant in the dark?');
+}
+let plantTimer=null;
+function playPlantWeek(){
+  const btn=$('plantPlayBtn'), label=$('plantDay'), sun=$('plantSun');
+  if(plantTimer){ clearInterval(plantTimer); plantTimer=null; }
+  btn.disabled=true; let day=0;
+  speak('One plant on the window. One plant in a dark cupboard. One week goes by.');
+  plantTimer=setInterval(()=>{
+    day++;
+    if(day<=7){
+      label.textContent='Day '+day+' of 7 — ☀️ sunny window · 🌑 dark cupboard';
+      sun.style.transform='translateX('+((day-4)*11)+'px)';
+    }else{
+      clearInterval(plantTimer); plantTimer=null;
+      sun.style.transform='';
+      label.textContent='One week has passed! 🤔 What will happen to the plant in the dark?';
+      btn.disabled=false;
+      speak('One week has passed! What will happen to the plant in the dark?');
+    }
+  }, 650);
+}
+function plantTest(){
+  if(!INV.plant) INV.plant={};
+  INV.plant.tested=true;
+  $('plantResult').classList.add('show');
+  $('plantRecWindow').disabled=false; $('plantRecCupboard').disabled=false;
+  speak('Look! The window plant is tall and green. The cupboard plant is pale and weak. Plants need light!');
+}
+function speakPlantResult(){
+  speak('The window plant is tall and green. The cupboard plant is pale and weak. Plants need light to grow strong.');
+}
+const PLANT_QUIZ = [
+  {q:'What do plants need to grow strong and green?', opts:['Light','Darkness','Toys'], a:0, why:'Plants need light from the sun.'},
+  {q:'Where should we put a plant so it grows well?', opts:['In a dark cupboard','On the window','Under the bed'], a:1, why:'The window has lots of light.'},
+  {q:'What happens to a plant in the dark for a week?', opts:['It grows tall and green','It gets pale and weak','It makes flowers'], a:1, why:'No light — the plant cannot make its food.'},
+  {q:'In a fair test, the two plants must be…', opts:['The same','Very different'], a:0, why:'Only the place changes — the plants stay the same.'},
+  {q:'What else do plants need, not just light?', opts:['Water','Candy','Milk'], a:0, why:'Plants drink water with their roots.'}
+];
+const plantQuiz = quizState();
+function newPlantQuiz(){ startQuiz(plantQuiz, 'plantq', PLANT_QUIZ); }
+function speakPlantQuiz(){ if(plantQuiz.cur) speak(plantQuiz.cur.q); }
+
+/* ================= WATERPROOF TEST ================= */
+const WATER_VOCAB = [
+  {e:'💧', w:'Water', d:'Water is wet. Rain is water from the sky.'},
+  {e:'☂️', w:'Waterproof', d:'Waterproof means water cannot get in. You stay dry!'},
+  {e:'🧴', w:'Plastic', d:'Plastic is a material. Bottles and bags can be plastic.'},
+  {e:'📄', w:'Paper', d:'Paper is a material. Books are made of paper.'},
+  {e:'👕', w:'Cotton', d:'Cotton is soft. Shirts are made of cotton.'},
+  {e:'🌧️', w:'Rain', d:'Rain is water that falls from the clouds.'},
+  {e:'🌂', w:'Umbrella', d:'An umbrella keeps the rain off you.'},
+  {e:'🧥', w:'Raincoat', d:'A raincoat is waterproof. Wear it in the rain!'},
+  {e:'💦', w:'Wet', d:'Wet means water is on it.'},
+  {e:'🏖️', w:'Dry', d:'Dry means no water on it.'},
+  {e:'🧽', w:'Soak', d:'To soak up is to drink the water in, like a sponge.'},
+  {e:'💧', w:'Drop', d:'A drop is one tiny bit of water.'}
+];
+function speakWaterQ(){
+  speak('It is raining! We drop water on a plastic bag, a paper bag, and a cotton shirt. Which one keeps the things inside dry?');
+}
+function waterTest(){
+  if(!INV.water) INV.water={};
+  INV.water.tested=true;
+  $('waterObjPaper').classList.add('wet');
+  $('waterObjCotton').classList.add('wet');
+  ['waterBadgePlastic','waterBadgePaper','waterBadgeCotton'].forEach(id=>$(id).classList.add('show'));
+  $('waterResultText').textContent='The plastic bag stayed DRY! The paper and the cotton shirt got WET. Plastic is waterproof!';
+  ['waterRecPlastic','waterRecPaper','waterRecCotton'].forEach(id=>$(id).disabled=false);
+  speak('The plastic bag stayed dry! The paper and the cotton shirt got wet. Plastic is waterproof!');
+}
+function speakWaterResult(){
+  speak('Plastic is waterproof. It keeps water out. Paper and cotton get wet.');
+}
+const WATER_QUIZ = [
+  {q:'What does waterproof mean?', opts:['Water cannot get in','Water is warm','Water is blue'], a:0, why:'Waterproof things keep water out, so we stay dry.'},
+  {q:'Which of these is waterproof?', opts:['A paper bag','A plastic raincoat','A cotton shirt'], a:1, why:'Plastic keeps the water out.'},
+  {q:'What happens to paper in the rain?', opts:['It stays dry','It gets wet and soggy','It gets stronger'], a:1, why:'Paper soaks up water.'},
+  {q:'Why do we wear a raincoat when it rains?', opts:['To look pretty','To stay dry','To get wet'], a:1, why:'A raincoat is waterproof — it keeps us dry.'},
+  {q:'In a fair test, every thing must get…', opts:['The same drops of water','Lots of water for one thing','No water at all'], a:0, why:'A fair test gives every thing the same drops.'}
+];
+const waterQuiz = quizState();
+function newWaterQuiz(){ startQuiz(waterQuiz, 'waterq', WATER_QUIZ); }
+function speakWaterQuiz(){ if(waterQuiz.cur) speak(waterQuiz.cur.q); }
+
+/* ================= FLOAT OR SINK ================= */
+const FLOAT_VOCAB = [
+  {e:'🌊', w:'Float', d:'To float is to stay on top of the water.'},
+  {e:'⬇️', w:'Sink', d:'To sink is to go down, down to the bottom.'},
+  {e:'💧', w:'Water', d:'Water is wet. We can swim and splash in water.'},
+  {e:'🪵', w:'Wood', d:'Wood comes from trees. Wood is light and it floats.'},
+  {e:'🪨', w:'Stone', d:'A stone is hard and heavy. Stones sink.'},
+  {e:'🪙', w:'Metal', d:'Metal is a material. Coins and keys are metal, and they sink.'},
+  {e:'🍃', w:'Leaf', d:'A leaf is light. Leaves float on water.'},
+  {e:'🔑', w:'Key', d:'A key is made of metal. Keys sink in water.'},
+  {e:'🦆', w:'Duck', d:'A rubber duck floats in the bath!'},
+  {e:'🍎', w:'Apple', d:'An apple floats in water. Try it!'},
+  {e:'⛵', w:'Boat', d:'A boat floats and carries people on the water.'},
+  {e:'🫧', w:'Bubble', d:'Bubbles are balls of air. They float up!'}
+];
+function speakFloatQ(){ speak('What will the stone do in the water? Will it float, or sink?'); }
+function floatTest(){
+  if(!INV.float) INV.float={};
+  INV.float.tested=true;
+  $('floatObj').style.top='72%';
+  $('floatResultText').textContent='Splash! The stone sank to the bottom!';
+  $('floatRecFloat').disabled=false; $('floatRecSink').disabled=false;
+  speak('Splash! The stone sank to the bottom!');
+}
+const FLOAT_ITEMS = [
+  {e:'🪵', n:'Wood', floats:true}, {e:'🪨', n:'Stone', floats:false},
+  {e:'🍃', n:'Leaf', floats:true}, {e:'🪙', n:'Coin', floats:false},
+  {e:'🦆', n:'Rubber duck', floats:true}, {e:'🔑', n:'Metal key', floats:false},
+  {e:'🍎', n:'Apple', floats:true}, {e:'🥄', n:'Metal spoon', floats:false}
+];
+let floatText2='';
+function testFloat2(it){
+  const obj=$('floatObj2'); obj.textContent=it.e;
+  obj.style.top = it.floats ? '16%' : '72%';
+  floatText2 = 'The '+it.n.toLowerCase()+' '+(it.floats?'floats! It stays on top of the water.':'sinks! It goes down to the bottom.');
+  $('floatText2').textContent=floatText2; speak(floatText2);
+}
+function speakFloat2(){ if(floatText2) speak(floatText2); }
+const FLOAT_QUIZ = [
+  {q:'What does a stone do in water?', opts:['It floats','It sinks','It flies'], a:1, why:'Stones are heavy — they sink to the bottom.'},
+  {q:'What does a piece of wood do in water?', opts:['It sinks','It floats','It melts'], a:1, why:'Wood is light — it floats on top.'},
+  {q:'Which of these will sink?', opts:['A leaf','A rubber duck','A metal key'], a:2, why:'Metal is heavy — the key sinks.'},
+  {q:'What does float mean?', opts:['Stay on top of the water','Go to the bottom','Get wet and soggy'], a:0, why:'Floating things stay on top.'},
+  {q:'What must a scientist do FIRST, before dropping a thing in water?', opts:['Record','Predict','Splash everyone'], a:1, why:'First we predict, then we test, then we record.'}
+];
+const floatQuiz = quizState();
+function newFloatQuiz(){ startQuiz(floatQuiz, 'floatq', FLOAT_QUIZ); }
+function speakFloatQuiz(){ if(floatQuiz.cur) speak(floatQuiz.cur.q); }
+
+/* ================= MAGNET MAGIC ================= */
+const MAGNET_VOCAB = [
+  {e:'🧲', w:'Magnet', d:'A magnet can pull some metals to it. Magic!'},
+  {e:'📎', w:'Metal', d:'Metal is a material. Keys and clips are made of metal.'},
+  {e:'🪵', w:'Wood', d:'Wood comes from trees. A magnet cannot pick up wood.'},
+  {e:'🧴', w:'Plastic', d:'Plastic is a material. A magnet cannot pick up plastic.'},
+  {e:'💪', w:'Pull', d:'To pull is to move things towards you.'},
+  {e:'🎯', w:'Pick up', d:'To pick up is to lift something up.'},
+  {e:'🔑', w:'Key', d:'A key is made of metal. A magnet can pick it up!'},
+  {e:'📌', w:'Pin', d:'A pin is small and made of metal.'},
+  {e:'⛓️', w:'Iron', d:'Iron is a metal. Magnets love iron!'},
+  {e:'🧊', w:'Fridge', d:'Magnets can stick on a fridge door.'},
+  {e:'🧲', w:'Stick', d:'To stick is to stay on something and not fall off.'},
+  {e:'🔩', w:'Screw', d:'A screw is small and made of metal.'}
+];
+function speakMagnetQ(){ speak('Which things will the magnet pick up?'); }
+function magnetTest(){
+  if(!INV.magnet) INV.magnet={};
+  INV.magnet.tested=true;
+  $('magObjPin').classList.add('fly-up');
+  $('magObjClip').classList.add('fly-up');
+  ['magBadgePin','magBadgeClip','magBadgeWood','magBadgePlastic'].forEach(id=>$(id).classList.add('show'));
+  $('magnetResultText').textContent='The pin and the paper clip flew up to the magnet! The wood and the plastic stayed. Magnets pick up things made of metal!';
+  ['magnetRecMetal','magnetRecWood','magnetRecAll'].forEach(id=>$(id).disabled=false);
+  speak('The pin and the paper clip flew up! Magnets pick up things made of metal!');
+}
+function speakMagnetResult(){
+  speak('Magnets pick up things made of metal, like pins, clips and keys. Magnets do not pick up wood or plastic.');
+}
+const MAGNET_QUIZ = [
+  {q:'What can a magnet pick up?', opts:['Things made of wood','Things made of metal','All things'], a:1, why:'Magnets pull things made of iron and some metals.'},
+  {q:'Will a magnet pick up a paper clip?', opts:['Yes!','No'], a:0, why:'A paper clip is made of metal.'},
+  {q:'Will a magnet pick up a plastic cup?', opts:['Yes!','No'], a:1, why:'Plastic is not metal — the magnet cannot pick it up.'},
+  {q:'A magnet pulls things…', opts:['Away from it','Towards it','Into the water'], a:1, why:'A pull moves things towards you — or towards the magnet!'},
+  {q:'Which of these is made of metal?', opts:['A wooden ruler','A paper book','A key'], a:2, why:'Keys are made of metal, so a magnet can pick them up.'}
+];
+const magnetQuiz = quizState();
+function newMagnetQuiz(){ startQuiz(magnetQuiz, 'magnetq', MAGNET_QUIZ); }
+function speakMagnetQuiz(){ if(magnetQuiz.cur) speak(magnetQuiz.cur.q); }
+
+/* ================= MELTING ICE ================= */
+const MELT_VOCAB = [
+  {e:'🧊', w:'Ice', d:'Ice is frozen water. Ice is hard and very cold.'},
+  {e:'☀️', w:'Sun', d:'The sun is hot and bright. It makes things warm.'},
+  {e:'🌡️', w:'Warm', d:'Warm is not cold. The sun makes us warm.'},
+  {e:'💧', w:'Melt', d:'To melt is to change from hard ice to water.'},
+  {e:'🌳', w:'Shade', d:'Shade is the cool, dark place under a tree.'},
+  {e:'💦', w:'Water', d:'When ice melts, it becomes water.'},
+  {e:'🍦', w:'Ice cream', d:'Ice cream melts on a hot day. Quick, eat it!'},
+  {e:'🧈', w:'Butter', d:'Butter melts in a hot pan.'},
+  {e:'🍫', w:'Chocolate', d:'Chocolate melts in your warm hand.'},
+  {e:'❄️', w:'Freeze', d:'To freeze is to change from water to ice. It is the opposite of melt!'},
+  {e:'🥶', w:'Cold', d:'Cold is the opposite of warm. Brrr!'},
+  {e:'🔥', w:'Hot', d:'Hot means very warm, like the sun at lunch time.'}
+];
+function speakMeltQ(){ speak('One ice cube sits in the sun. One ice cube sits in the shade. Which ice cube will melt first?'); }
+function meltTest(){
+  if(!INV.melt) INV.melt={};
+  INV.melt.tested=true;
+  $('meltIceSun').style.transform='scale(.12)'; $('meltIceSun').style.opacity='.35';
+  $('meltIceShade').style.transform='scale(.78)';
+  setTimeout(()=>{ $('meltIceSun').textContent='💧'; $('meltIceSun').style.opacity='1'; }, 2300);
+  ['meltBadgeSun','meltBadgeShade'].forEach(id=>$(id).classList.add('show'));
+  $('meltResultText').textContent='The ice in the sun melted all the way to water! The ice in the shade is still big — the shade is cool.';
+  ['meltRecSun','meltRecShade'].forEach(id=>$(id).disabled=false);
+  speak('The ice in the sun melted first! The sun is warm. The ice in the shade is still there.');
+}
+function speakMeltResult(){ speak('Ice melts faster when it is warm. The warm sun melted the ice first.'); }
+const MELT_QUIZ = [
+  {q:'Which ice cube melts first?', opts:['The one in the shade','The one in the sun','They never melt'], a:1, why:'The sun is warm, and ice melts faster when it is warm.'},
+  {q:'What does ice become when it melts?', opts:['Water','Stone','Sand'], a:0, why:'Ice is frozen water — melting turns it back to water.'},
+  {q:'What is shade?', opts:['A hot place','The cool place under a tree','A kind of ice'], a:1, why:'Shade is cool and dark, away from the sun.'},
+  {q:'Where would an ice lolly melt SLOWEST?', opts:['In the hot sun','On a warm hand','In a cold fridge'], a:2, why:'Cold keeps ice frozen for longer.'},
+  {q:'In a fair test, the two ice cubes must be…', opts:['The same size','Very different sizes'], a:0, why:'Only the place changes — the ice cubes stay the same.'}
+];
+const meltQuiz = quizState();
+function newMeltQuiz(){ startQuiz(meltQuiz, 'meltq', MELT_QUIZ); }
+function speakMeltQuiz(){ if(meltQuiz.cur) speak(meltQuiz.cur.q); }
+
+/* ================= SEEDS & WATER ================= */
+const SEED_VOCAB = [
+  {e:'🫘', w:'Seed', d:'A seed is a tiny baby plant, sleeping.'},
+  {e:'💧', w:'Water', d:'Water is wet. Seeds need water to wake up and grow.'},
+  {e:'🌱', w:'Sprout', d:'A sprout is a baby plant coming out of the seed.'},
+  {e:'🌿', w:'Grow', d:'To grow is to get bigger and bigger.'},
+  {e:'🪴', w:'Pot', d:'A pot holds the soil and the seed.'},
+  {e:'🏜️', w:'Dry', d:'Dry means no water at all.'},
+  {e:'🌞', w:'Sun', d:'The sun gives light. Seeds need light and water.'},
+  {e:'🌻', w:'Flower', d:'A flower grows on a plant. It is pretty!'},
+  {e:'🪴', w:'Soil', d:'Soil is the brown earth. It holds the seed and the water.'},
+  {e:'⬆️', w:'Tall', d:'Tall means high up, like a big tree.'},
+  {e:'🌳', w:'Tree', d:'A big tree starts as one tiny seed!'},
+  {e:'📅', w:'Week', d:'A week is seven days.'}
+];
+function speakSeedQ(){
+  speak('We water one seed every day. The other seed gets no water at all. The two seeds are the same. What will happen to the seed with no water?');
+}
+let seedTimer=null;
+function playSeedWeek(){
+  const btn=$('seedPlayBtn'), label=$('seedDay');
+  if(seedTimer){ clearInterval(seedTimer); seedTimer=null; }
+  btn.disabled=true; let day=0;
+  speak('One seed gets water every day. One seed gets no water. One week goes by.');
+  seedTimer=setInterval(()=>{
+    day++;
+    if(day<=7){
+      label.textContent='Day '+day+' of 7 — 💧 watered seed · 🏜️ dry seed';
+    }else{
+      clearInterval(seedTimer); seedTimer=null;
+      label.textContent='One week has passed! 🤔 What will happen to the seed with no water?';
+      btn.disabled=false;
+      speak('One week has passed! What will happen to the seed with no water?');
+    }
+  }, 650);
+}
+function seedTest(){
+  if(!INV.seed) INV.seed={};
+  INV.seed.tested=true;
+  $('seedResult').classList.add('show');
+  $('seedRecWater').disabled=false; $('seedRecDry').disabled=false;
+  speak('Look! The seed with water sprouted and grew. The dry seed did not grow. Seeds need water!');
+}
+function speakSeedResult(){ speak('Seeds need water to grow. The watered seed sprouted. The dry seed stayed a seed.'); }
+const SEED_QUIZ = [
+  {q:'What do seeds need to start growing?', opts:['Water','Candy','Music'], a:0, why:'Water wakes the seed up so it can sprout.'},
+  {q:'What happens to a seed with NO water?', opts:['It grows tall','It does not grow','It makes flowers'], a:1, why:'No water — the seed keeps sleeping.'},
+  {q:'What is a sprout?', opts:['A baby plant coming out of a seed','A kind of stone','A big tree'], a:0, why:'The sprout is the first tiny plant.'},
+  {q:'What TWO things do seeds and plants need to grow?', opts:['Water and light','Toys and books','Milk and juice'], a:0, why:'Plants need water and light — just like our two plant tests!'},
+  {q:'In a fair test, the two seeds must be…', opts:['The same','Very different'], a:0, why:'Only the water changes — the seeds stay the same.'}
+];
+const seedQuiz = quizState();
+function newSeedQuiz(){ startQuiz(seedQuiz, 'seedq', SEED_QUIZ); }
+function speakSeedQuiz(){ if(seedQuiz.cur) speak(seedQuiz.cur.q); }
+
+/* ================= WIND TEST ================= */
+const WIND_VOCAB = [
+  {e:'🌬️', w:'Wind', d:'Wind is moving air. Wind can push things.'},
+  {e:'💨', w:'Blow', d:'To blow is to push air out.'},
+  {e:'🍃', w:'Light', d:'Light things are easy to lift. A leaf is light.'},
+  {e:'🪨', w:'Heavy', d:'Heavy things are hard to lift. A stone is heavy.'},
+  {e:'🌀', w:'Fan', d:'A fan blows air round and round.'},
+  {e:'🧻', w:'Tissue', d:'A tissue is soft, thin and very light.'},
+  {e:'🌪️', w:'Storm', d:'A storm is very strong wind with rain.'},
+  {e:'🪁', w:'Kite', d:'A kite flies up in the wind!'},
+  {e:'⛵', w:'Sail', d:'The wind pushes the sail, and the boat moves.'},
+  {e:'🍃', w:'Breeze', d:'A breeze is a small, soft wind.'},
+  {e:'💪', w:'Push', d:'A push moves things away from you. The wind pushes, too!'},
+  {e:'🎈', w:'Balloon', d:'A balloon is light. The wind can blow it away!'}
+];
+function speakWindQ(){ speak('When the fan blows, which things will move?'); }
+function windTest(){
+  if(!INV.wind) INV.wind={};
+  INV.wind.tested=true;
+  $('windObjTissue').classList.add('blown');
+  $('windObjLeaf').classList.add('blown');
+  ['windBadgeTissue','windBadgeLeaf','windBadgeStone','windBadgeBook'].forEach(id=>$(id).classList.add('show'));
+  $('windResultText').textContent='Whoosh! The wind pushed the tissue and the leaf away! The stone and the book are heavy — they stayed.';
+  ['windRecLight','windRecStone','windRecAll'].forEach(id=>$(id).disabled=false);
+  speak('Whoosh! The wind moved the light things. The heavy stone and book stayed.');
+}
+function speakWindResult(){ speak('Wind is moving air. Moving air can push light things, like tissues and leaves.'); }
+const WIND_QUIZ = [
+  {q:'What is wind?', opts:['Moving air','Hot water','A kind of rain'], a:0, why:'Wind is air that moves — and it can push!'},
+  {q:'Which of these can the wind blow away?', opts:['A stone','A leaf','A book'], a:1, why:'A leaf is light, so the wind can push it.'},
+  {q:'Why did the stone NOT move?', opts:['It is heavy','It is sleeping','It is wet'], a:0, why:'The wind is not strong enough to push heavy things.'},
+  {q:'Wind pushes things…', opts:['Towards the fan','Away from the fan','Into the ground'], a:1, why:'A push moves things away — the wind pushes things away from the fan.'},
+  {q:'On a windy day, what might fly away?', opts:['A house','A car','A paper hat'], a:2, why:'A paper hat is light — off it goes!'}
+];
+const windQuiz = quizState();
+function newWindQuiz(){ startQuiz(windQuiz, 'windq', WIND_QUIZ); }
+function speakWindQuiz(){ if(windQuiz.cur) speak(windQuiz.cur.q); }
+
+/* ================= SHAKE IT (SOUNDS) ================= */
+const SHAKE_VOCAB = [
+  {e:'🔊', w:'Sound', d:'A sound is something we hear with our ears.'},
+  {e:'🤲', w:'Shake', d:'To shake is to move something fast, back and forth.'},
+  {e:'📢', w:'Loud', d:'Loud means a big, strong sound. Boom!'},
+  {e:'🤫', w:'Quiet', d:'Quiet means no sound, or a very small sound. Shhh.'},
+  {e:'🥁', w:'Drum', d:'Hit a drum and it goes boom, boom!'},
+  {e:'🔔', w:'Bell', d:'Shake a bell and it goes ring, ring!'},
+  {e:'👂', w:'Ear', d:'We hear sounds with our ears.'},
+  {e:'🎵', w:'Music', d:'Music is sounds we like, put together.'},
+  {e:'🗣️', w:'Voice', d:'Your voice makes sounds when you talk and sing.'},
+  {e:'📣', w:'Shout', d:'To shout is to talk very, very loud!'},
+  {e:'🐝', w:'Buzz', d:'Bees go buzz! Their wings shake very fast.'},
+  {e:'🌩️', w:'Thunder', d:'Thunder is the loud sound of a storm. Boom!'}
+];
+function speakShakeQ(){ speak('When we shake them, will all of them make a sound?'); }
+function shakeTest(){
+  if(!INV.shake) INV.shake={};
+  INV.shake.tested=true;
+  ['shakeObjBell','shakeObjMaraca','shakeObjDrum'].forEach(id=>{ $(id).classList.remove('shaking'); void $(id).offsetWidth; $(id).classList.add('shaking'); });
+  ['shakeBadgeBell','shakeBadgeMaraca','shakeBadgeDrum','shakeBadgeTeddy'].forEach(id=>$(id).classList.add('show'));
+  $('shakeResultText').textContent='Ring! Shaka-shaka! Boom! The bell, the maraca and the drum made sounds. The soft teddy was quiet!';
+  ['shakeRecTeddy','shakeRecBell','shakeRecDrum'].forEach(id=>$(id).disabled=false);
+  speak('Ring! Boom! The bell, maraca and drum made sounds. The teddy was quiet!');
+}
+function speakShakeResult(){ speak('Sounds happen when things shake and move very fast. The soft teddy does not shake and ring, so it is quiet.'); }
+const SHAKE_QUIZ = [
+  {q:'When do sounds happen?', opts:['When things shake and move fast','When things sleep','When things get wet'], a:0, why:'Shaking and moving fast makes sounds.'},
+  {q:'Which of these makes a sound when you shake it?', opts:['A teddy','A bell','A pillow'], a:1, why:'The bell rings when it shakes.'},
+  {q:'Which of these is QUIET?', opts:['A drum','A maraca','A soft teddy'], a:2, why:'Soft things do not shake and ring.'},
+  {q:'We hear sounds with our…', opts:['Eyes','Ears','Nose'], a:1, why:'Ears are for hearing sounds.'},
+  {q:'A drum goes BOOM when you…', opts:['Hit it','Look at it','Smell it'], a:0, why:'Hitting the drum makes it shake — boom!'}
+];
+const shakeQuiz = quizState();
+function newShakeQuiz(){ startQuiz(shakeQuiz, 'shakeq', SHAKE_QUIZ); }
+function speakShakeQuiz(){ if(shakeQuiz.cur) speak(shakeQuiz.cur.q); }
+
+/* ================= SUN & SHADOWS ================= */
+const SHADOW_VOCAB = [
+  {e:'🌞', w:'Sun', d:'The sun gives us light. It moves across the sky.'},
+  {e:'🌳', w:'Shadow', d:'A shadow is a dark shape. It is made when something blocks the light.'},
+  {e:'🌅', w:'Morning', d:'Morning is the start of the day. The sun is low.'},
+  {e:'🕛', w:'Noon', d:'Noon is lunch time. The sun is high in the sky.'},
+  {e:'📏', w:'Long', d:'Long means it goes far, like a long shadow in the morning.'},
+  {e:'🤏', w:'Short', d:'Short means it does not go far, like a shadow at noon.'},
+  {e:'🌇', w:'Afternoon', d:'Afternoon comes after lunch. The sun gets low again.'},
+  {e:'🌃', w:'Night', d:'At night the sun is gone and it is dark.'},
+  {e:'🔦', w:'Torch', d:'A torch makes light in the dark.'},
+  {e:'🖐️', w:'Hand', d:'Hold up your hand — can you see its shadow?'},
+  {e:'💡', w:'Light', d:'Light comes from the sun and from lamps.'},
+  {e:'🌑', w:'Dark', d:'Dark means no light at all.'}
+];
+function speakShadowQ(){ speak('At lunch time, the sun is high in the sky. What will the tree shadow look like at lunch time?'); }
+let shadowTimers=[];
+function shadowTest(){
+  if(!INV.shadow) INV.shadow={};
+  INV.shadow.tested=true;
+  shadowTimers.forEach(t=>clearTimeout(t)); shadowTimers=[];
+  const sun=$('shadowSun'), shape=$('shadowShape'), label=$('shadowDayLabel');
+  const phases=[
+    {left:'8%',  top:'10px', w:'130px', x:'6px',    txt:'☀️ Morning — the shadow is LONG', say:'Morning. The sun is low. The shadow is long.'},
+    {left:'44%', top:'2px',  w:'34px',  x:'-50%',   txt:'🕛 Lunch time — the shadow is SHORT', say:'Lunch time! The sun is high. The shadow is short!'},
+    {left:'80%', top:'10px', w:'130px', x:'-100%',  txt:'🌇 Afternoon — the shadow is LONG again', say:'Afternoon. The sun is low again. The shadow is long again.'}
+  ];
+  phases.forEach((p,i)=>{
+    shadowTimers.push(setTimeout(()=>{
+      sun.style.left=p.left; sun.style.top=p.top;
+      shape.style.width=p.w; shape.style.transform='translateX('+p.x+')';
+      label.textContent=p.txt; speak(p.say);
+      if(i===phases.length-1){ $('shadowRecShort').disabled=false; $('shadowRecLong').disabled=false; }
+    }, i*2400));
+  });
+}
+function speakShadowResult(){ speak('In the morning and afternoon, the sun is low and shadows are long. At lunch time, the sun is high and shadows are short.'); }
+const SHADOW_QUIZ = [
+  {q:'At lunch time, the sun is…', opts:['Low in the sky','High in the sky','Sleeping'], a:1, why:'At noon the sun is high above us.'},
+  {q:'When is a shadow SHORT?', opts:['In the morning','At lunch time','In the afternoon'], a:1, why:'A high sun makes a short shadow.'},
+  {q:'When is a shadow LONG?', opts:['In the morning','At lunch time','Never'], a:0, why:'A low sun makes long shadows — morning and afternoon.'},
+  {q:'What makes a shadow?', opts:['Rain','Something blocks the light','Wind'], a:1, why:'When a tree blocks the sunlight, a dark shadow shape appears.'},
+  {q:'Does the shadow of a tree stay the same all day?', opts:['Yes, always','No, it changes'], a:1, why:'The sun moves, so the shadow moves and changes too.'}
+];
+const shadowQuiz = quizState();
+function newShadowQuiz(){ startQuiz(shadowQuiz, 'shadowq', SHADOW_QUIZ); }
+function speakShadowQuiz(){ if(shadowQuiz.cur) speak(shadowQuiz.cur.q); }
+
+/* ================= Init ================= */
+buildVocabInto('vocabGrid', VOCAB);
+buildVocabInto('plantVocab', PLANT_VOCAB);
+buildVocabInto('waterVocab', WATER_VOCAB);
+buildVocabInto('floatVocab', FLOAT_VOCAB);
+buildVocabInto('magnetVocab', MAGNET_VOCAB);
+buildVocabInto('meltVocab', MELT_VOCAB);
+buildVocabInto('seedVocab', SEED_VOCAB);
+buildVocabInto('windVocab', WIND_VOCAB);
+buildVocabInto('shakeVocab', SHAKE_VOCAB);
+buildVocabInto('shadowVocab', SHADOW_VOCAB);
+renderStars();
+FLOAT_ITEMS.forEach(it=>{
+  const b=document.createElement('button'); b.className='chip'; b.textContent=it.e+' '+it.n;
+  b.onclick=()=>testFloat2(it); $('floatTestBtns').appendChild(b);
+});
+newRqGame(); newPlantQuiz(); newWaterQuiz(); newFloatQuiz(); newMagnetQuiz();
+newMeltQuiz(); newSeedQuiz(); newWindQuiz(); newShakeQuiz(); newShadowQuiz();
+</script>
+</body>
+</html>
