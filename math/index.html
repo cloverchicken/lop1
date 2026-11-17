@@ -556,20 +556,20 @@ button.q-item:hover{transform:scale(1.06)}
 
 <script>
 /* ================= Speech (English, device voice) ================= */
-/* Prefer a CLEAR male voice (the first en-GB voice on many devices is deep
-   and hard for young children to hear). Deep voices are only a last resort,
-   and the pitch is raised a little to make the voice brighter. */
-const CLEAR_MALE_VOICES = ['microsoft ryan','daniel','microsoft christopher','microsoft guy','tom','alex','microsoft eric','aaron','google us english'];
-const DEEP_VOICES = ['google uk english male','microsoft george','fred'];
+/* Prefer a CLEAR, bright FEMALE voice (her choice 2026-11-17, replacing the
+   clear-male preference). Male voices are only a last resort, and the pitch
+   is raised a little to keep the voice bright and easy for children to hear. */
+const CLEAR_FEMALE_VOICES = ['microsoft sonia','google uk english female','microsoft libby','microsoft maisie','samantha','microsoft aria','microsoft jenny','karen','google us english','microsoft zira'];
+const MALE_VOICES = ['microsoft ryan','daniel','microsoft christopher','microsoft guy','tom','alex','microsoft eric','aaron','google uk english male','microsoft george','fred'];
 function pickVoice(vs){
   const en = vs.filter(x=>/^en([-_]|$)/i.test(x.lang));
   if(!en.length) return null;
-  for(const name of CLEAR_MALE_VOICES){
+  for(const name of CLEAR_FEMALE_VOICES){
     const hit = en.find(x=>x.name.toLowerCase().includes(name));
     if(hit) return hit;
   }
-  const notDeep = x=>!DEEP_VOICES.some(d=>x.name.toLowerCase().includes(d));
-  return en.filter(x=>/^en[-_]GB/i.test(x.lang)).find(notDeep) || en.find(notDeep) || en[0];
+  const notMale = x=>!MALE_VOICES.some(d=>x.name.toLowerCase().includes(d));
+  return en.filter(x=>/^en[-_]GB/i.test(x.lang)).find(notMale) || en.find(notMale) || en[0];
 }
 function makeUtterance(text, rate){
   const u = new SpeechSynthesisUtterance(String(text).replace(/[🐱📦🏆🥇🥈🥉]/g,''));
